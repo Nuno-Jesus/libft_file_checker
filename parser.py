@@ -8,7 +8,7 @@ from setuptools import Require
 from ProjectFile import ProjectFile
 
 #List the files in the current directory
-entries = os.listdir("P00")
+entries = os.listdir('P00')
 
 # Overrides parser halting when an error pops up
 override = True
@@ -17,7 +17,6 @@ part1_files = {
 	'ft_memset' 	: ProjectFile('ft_memset', 'void\t*ft_memset(void *s, int c, size_t n)', []),
 	'ft_bzero' 		: ProjectFile('ft_bzero' , 'void\tft_bzero(void *s, size_t n)', []),
 	'ft_memcpy' 	: ProjectFile('ft_memcpy', 'void\t*ft_memcpy(void *dest, const void *src, size_t n)', []),
-	'ft_memccpy' 	: ProjectFile('ft_memccpy', 'void \t*ft_memccpy(void *dest, const void *src, int c, size_t n)', []),
 	'ft_memmove' 	: ProjectFile('ft_memmove', 'void\t*ft_memmove(void *dest, const void *src, size_t n)', []),
 	'ft_memchr' 	: ProjectFile('ft_memchr', 'void\t*ft_memchr(const void *s, int c, size_t n)', []),
 	'ft_memcmp' 	: ProjectFile('ft_memcmp', 'int\tft_memcmp(const void *s1, const void *s2, size_t n)', []),
@@ -49,6 +48,7 @@ part2_files = {
 	'ft_split'		: ProjectFile('ft_split' , 'char\t**ft_split(char const *s, char c)', ['malloc', 'free']),
 	'ft_itoa'		: ProjectFile('ft_itoa' , 'char\t*ft_itoa(int n)', ['malloc']),
 	'ft_strmapi'	: ProjectFile('ft_strmapi', 'char\t*ft_strmapi(char const *s, char (*f)(unsigned int, char))', ['malloc']),
+	'ft_striteri'	: ProjectFile('ft_striteri', 'void\tft_striteri(char *s, void (*f)(unsigned int, char*));', None),
 	'ft_putchar_fd'	: ProjectFile('ft_putchar_fd', 'void\tft_putchar_fd(char c, int fd)', ['write']),
 	'ft_putstr_fd'	: ProjectFile('ft_putstr_fd', 'void\tft_putstr_fd(char *s, int fd)', ['write']),
 	'ft_putendl_fd'	: ProjectFile('ft_putendl_fd', 'void\tft_putendl_fd(char *s, int fd)', ['write']),
@@ -56,15 +56,15 @@ part2_files = {
 }
 
 bonus_files = {
-	'ft_lstnew' 		: ProjectFile('ft_lstnew' , 't_list\t*ft_lstnew(void *content)', ['malloc']),
-	'ft_lstadd_front' 	: ProjectFile('ft_lstadd_front', 'void\tft_lstadd_front(t_list **lst, t_list *new)', None),
-	'ft_lstsize' 		: ProjectFile('ft_lstsize' , 'int\tft_lstsize(t_list *lst)', None),
-	'ft_lstlast' 		: ProjectFile('ft_lstlast' , 't_list\t*ft_lstlast(t_list *lst)', None),
-	'ft_lstadd_back' 	: ProjectFile('ft_lstadd_back', 'void\tft_lstadd_back(t_list **lst, t_list *new)', None),
-	'ft_lstdelone' 		: ProjectFile('ft_lstdelone' , 'void\tft_lstdelone(t_list *lst, void (*del)(void*))', ['free']),
-	'ft_lstclear' 		: ProjectFile('ft_lstclear' , 'void\tft_lstclear(t_list **lst, void (*del)(void*))', ['free']),
-	'ft_lstiter' 		: ProjectFile('ft_lstiter' , 'void\tft_lstiter(t_list *lst, void (*f)(void *))', None),
-	'ft_lstmap' 		: ProjectFile('ft_lstmap' , 't_list\t*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))', ['malloc', 'free'])
+	'ft_lstnew_bonus' 		: ProjectFile('ft_lstnew' , 't_list\t*ft_lstnew(void *content)', ['malloc']),
+	'ft_lstadd_front_bonus' : ProjectFile('ft_lstadd_front', 'void\tft_lstadd_front(t_list **lst, t_list *new)', None),
+	'ft_lstsize_bonus' 		: ProjectFile('ft_lstsize' , 'int\tft_lstsize(t_list *lst)', None),
+	'ft_lstlast_bonus' 		: ProjectFile('ft_lstlast' , 't_list\t*ft_lstlast(t_list *lst)', None),
+	'ft_lstadd_back_bonus' 	: ProjectFile('ft_lstadd_back', 'void\tft_lstadd_back(t_list **lst, t_list *new)', None),
+	'ft_lstdelone_bonus' 	: ProjectFile('ft_lstdelone' , 'void\tft_lstdelone(t_list *lst, void (*del)(void*))', ['free']),
+	'ft_lstclear_bonus' 	: ProjectFile('ft_lstclear' , 'void\tft_lstclear(t_list **lst, void (*del)(void*))', ['free']),
+	'ft_lstiter_bonus' 		: ProjectFile('ft_lstiter' , 'void\tft_lstiter(t_list *lst, void (*f)(void *))', None),
+	'ft_lstmap_bonus' 		: ProjectFile('ft_lstmap' , 't_list\t*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))', ['malloc', 'free'])
 }
 
 extra_files = {}
@@ -74,20 +74,28 @@ def print_separator(title, c1, c2, color):
 	print('\n\t' + 25*c1 + color + f' {title} ' + Style.RESET_ALL + 25*c2 + '\n')
 
 def read_delivered_files():
+	print(entries)
 	for entry in entries:
 		filename = entry.replace('.c', '')
+		#print(part1_files.get(filename))
 
-		if part1_files.get(filename) != None:
-			part1_files[filename][1] = True
-		elif part2_files.get(filename) != None:
-			part2_files[filename][1] = True
-		elif bonus_files.get(filename) != None:
-			bonus_files[filename][1] = True
+		if part1_files.get(filename):
+			print("Entered this 1 with " + filename)
+			part1_files[filename].wasDelivered = True
+		elif part2_files.get(filename):
+			print("Entered this 2 with " + filename)
+			part2_files[filename].wasDelivered = True
+		elif bonus_files.get(filename):
+			print("Entered this 3 with " + filename)
+			bonus_files[filename].wasDelivered = True
 		elif filename.endswith('_bonus'):
-			extra_files[entry] = (filename.replace('_bonus', ''), True)
+			print("Entered this 4 with " + filename)
+			extra_files[entry] = ProjectFile(filename.replace('_bonus', ''), None, None)
+			extra_files[entry].wasDelivered = True
 		else:
-			unknown_files[entry] = (filename, True)
-
+			print("Entered this 5 with " + filename)
+			unknown_files[entry] = ProjectFile(filename, None, None)
+			unknown_files[entry].wasDelivered = True
 
 def print_files(dict, expected, color):
 	dict_list = list(dict.items())
@@ -95,7 +103,7 @@ def print_files(dict, expected, color):
 
 	count = 0
 	for item in dict_list:
-		if item[1][1] == expected:
+		if item[1].wasDelivered == expected:
 			print(f'\t{color}{item[0].ljust(20)}{Style.RESET_ALL}', end='')
 			count += 1
 			
@@ -105,8 +113,8 @@ def print_files(dict, expected, color):
 
 def parse_filenames(dict):
 	num_total = len(list(dict.keys()))
-	num_correct = str(list(map(lambda x : x[1], dict.values())).count(True))
-	num_missing = str(list(map(lambda x : x[1], dict.values())).count(False))
+	num_correct = str(len(list(map(lambda x : x.wasDelivered, dict.values()))))
+	num_missing = str(len(list(map(lambda x : not x.wasDelivered, dict.values()))))
 
 	print(f'Correct files: {Fore.GREEN}{num_correct}{Style.RESET_ALL}\n')
 
