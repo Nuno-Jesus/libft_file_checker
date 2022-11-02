@@ -8,7 +8,7 @@ from setuptools import Require
 from ProjectFile import ProjectFile
 
 #List the files in the current directory
-entries = os.listdir('P00')
+entries = os.listdir()
 
 # Overrides parser halting when an error pops up
 override = True
@@ -67,33 +67,22 @@ bonus_files = {
 	'ft_lstmap_bonus' 		: ProjectFile('ft_lstmap' , 't_list\t*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))', ['malloc', 'free'])
 }
 
-extra_files = {}
 unknown_files = {}
 
 def print_separator(title, c1, c2, color):
 	print('\n\t' + 25*c1 + color + f' {title} ' + Style.RESET_ALL + 25*c2 + '\n')
 
 def read_delivered_files():
-	print(entries)
 	for entry in entries:
 		filename = entry.replace('.c', '')
-		#print(part1_files.get(filename))
 
 		if part1_files.get(filename):
-			print("Entered this 1 with " + filename)
 			part1_files[filename].wasDelivered = True
 		elif part2_files.get(filename):
-			print("Entered this 2 with " + filename)
 			part2_files[filename].wasDelivered = True
 		elif bonus_files.get(filename):
-			print("Entered this 3 with " + filename)
 			bonus_files[filename].wasDelivered = True
-		elif filename.endswith('_bonus'):
-			print("Entered this 4 with " + filename)
-			extra_files[entry] = ProjectFile(filename.replace('_bonus', ''), None, None)
-			extra_files[entry].wasDelivered = True
 		else:
-			print("Entered this 5 with " + filename)
 			unknown_files[entry] = ProjectFile(filename, None, None)
 			unknown_files[entry].wasDelivered = True
 
@@ -113,8 +102,10 @@ def print_files(dict, expected, color):
 
 def parse_filenames(dict):
 	num_total = len(list(dict.keys()))
-	num_correct = str(len(list(map(lambda x : x.wasDelivered, dict.values()))))
-	num_missing = str(len(list(map(lambda x : not x.wasDelivered, dict.values()))))
+	num_correct = str(len(list(filter(lambda x : x.wasDelivered == True, dict.values()))))
+	num_missing = str(len(list(filter(lambda x : x.wasDelivered == False, dict.values()))))
+
+	print(dict.values())
 
 	print(f'Correct files: {Fore.GREEN}{num_correct}{Style.RESET_ALL}\n')
 
@@ -206,11 +197,6 @@ if __name__ == '__main__':
 		print(f'{Fore.LIGHTYELLOW_EX}BONUS PART{Style.RESET_ALL}')
 		parse_filenames(bonus_files)
 
-	if len(extra_files) > 0:
-		print(f'{Fore.LIGHTYELLOW_EX}EXTRA FILES{Style.RESET_ALL}')
-		print('These files were also found:\n')
-		print_files(extra_files, True, Fore.WHITE)
-
 	####################################### 2 #######################################
 	
 	# TO BE IMPLEMENTED 
@@ -220,12 +206,3 @@ if __name__ == '__main__':
 	if input('-> Press ENTER to continue.') == '':
 		os.system('clear')
 		parse_headers()
-
-
-
-	
-	
-	
-
-	
-

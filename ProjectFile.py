@@ -3,9 +3,10 @@ class ProjectFile:
 		self.func = func
 		self.header = header
 		self.allowed_funcs = allowed_funcs
+		self.wasDelivered = False
 
 	def __eq__(self, other):
-		self.func == other.func and self.header == other.header and self.allowed_funcs == other.allowed_funcs
+		return self.func 
 
 	def check_header(self):
 		f = open(self.func + '\n', 'r')
