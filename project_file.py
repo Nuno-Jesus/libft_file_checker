@@ -6,10 +6,7 @@ class ProjectFile:
 		self.wasDelivered = False
 
 	def check_header(self):
-		if self.func.startswith('ft_lst'):
-			f = open(self.func + '_bonus.c', 'r')
-		else:
-			f = open(self.func + '.c', 'r')
+		f = open(self.func + '.c', 'r')
 
 		line = f.readline()
 		while line != '':

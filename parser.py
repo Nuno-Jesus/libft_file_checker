@@ -1,211 +1,111 @@
 import os
-
-from pip import main
-from colorama import Fore
 from colorama import Style
-from setuptools import Require
+from colorama import Fore
+from utils import *
 
-from ProjectFile import ProjectFile
-
-#List the files in the current directory
-entries = os.listdir()
-
-# Overrides parser halting when an error pops up
-override = True
-
-part1_files = {
-	'ft_memset' 	: ProjectFile('ft_memset', 'void\t*ft_memset(void *s, int c, size_t n)', []),
-	'ft_bzero' 		: ProjectFile('ft_bzero' , 'void\tft_bzero(void *s, size_t n)', []),
-	'ft_memcpy' 	: ProjectFile('ft_memcpy', 'void\t*ft_memcpy(void *dest, const void *src, size_t n)', []),
-	'ft_memmove' 	: ProjectFile('ft_memmove', 'void\t*ft_memmove(void *dest, const void *src, size_t n)', []),
-	'ft_memchr' 	: ProjectFile('ft_memchr', 'void\t*ft_memchr(const void *s, int c, size_t n)', []),
-	'ft_memcmp' 	: ProjectFile('ft_memcmp', 'int\tft_memcmp(const void *s1, const void *s2, size_t n)', []),
-	'ft_strlen' 	: ProjectFile('ft_strlen', 'size_t\tft_strlen(char const *s)', []),
-	'ft_strlcpy' 	: ProjectFile('ft_strlcpy', 'size_t\tft_strlcpy(char *dst, const char *src, size_t size)', []),
-	'ft_strlcat' 	: ProjectFile('ft_strlcat', 'size_t\tft_strlcat(char *dst, const char *src, size_t size)', []),
-	'ft_strchr' 	: ProjectFile('ft_strchr', 'char\t*ft_strchr(const char *s, int c)', []),
-	'ft_strrchr' 	: ProjectFile('ft_strrchr', 'char\t*ft_strrchr(const char *s, int c)', []),
-	'ft_strnstr' 	: ProjectFile('ft_strnstr', 'char\t*ft_strnstr(const char *big, const char *little, size_t len)', []),
-	'ft_strncmp' 	: ProjectFile('ft_strncmp', 'int\tft_strncmp(const char *s1, const char *s2, size_t n)', []),
-	'ft_atoi' 		: ProjectFile('ft_atoi' ,  'int\tft_atoi(const char *nptr)', []),
-	'ft_isalpha' 	: ProjectFile('ft_isalpha', 'int\tft_isalpha(int c)', []),
-	'ft_isdigit' 	: ProjectFile('ft_isdigit', 'int\tft_isdigit(int c)', []),
-	'ft_isalnum' 	: ProjectFile('ft_isalnum', 'int\tft_isalnum(int c)', []),
-	'ft_isascii' 	: ProjectFile('ft_isascii', 'int\tft_isascii(int c)', []),
-	'ft_isprint' 	: ProjectFile('ft_isprint', 'int\tft_isprint(int c)', []),
-	'ft_toupper' 	: ProjectFile('ft_toupper', 'int\tft_toupper(int c)', []),
-	'ft_tolower' 	: ProjectFile('ft_tolower', 'int\tft_tolower(int c)', []),
-	'ft_calloc' 	: ProjectFile('ft_calloc', 'void\t*ft_calloc(size_t nmemb, size_t size)', []),
-	'ft_strdup' 	: ProjectFile('ft_strdup', 'char\t*ft_strdup(const char *s)', []),
-	'Makefile' 		: ProjectFile('Makefile' , None, None),
-	'libft.h' 		: ProjectFile('libft.h' , None, None),
-	'.git'			: ProjectFile('.git', None, None)
-}
-
-part2_files = {
-	'ft_substr'		: ProjectFile('ft_substr', 'char\t*ft_substr(char const *s, unsigned int start, size_t len)', ['malloc']),
-	'ft_strjoin'	: ProjectFile('ft_strjoin', 'char\t*ft_strjoin(char const *s1, char const *s2)', ['malloc']),
-	'ft_strtrim'	: ProjectFile('ft_strtrim', 'char\t*ft_strtrim(char const *s1, char const *set)', ['malloc']),
-	'ft_split'		: ProjectFile('ft_split' , 'char\t**ft_split(char const *s, char c)', ['malloc', 'free']),
-	'ft_itoa'		: ProjectFile('ft_itoa' , 'char\t*ft_itoa(int n)', ['malloc']),
-	'ft_strmapi'	: ProjectFile('ft_strmapi', 'char\t*ft_strmapi(char const *s, char (*f)(unsigned int, char))', ['malloc']),
-	'ft_striteri'	: ProjectFile('ft_striteri', 'void\tft_striteri(char *s, void (*f)(unsigned int, char *))', None),
-	'ft_putchar_fd'	: ProjectFile('ft_putchar_fd', 'void\tft_putchar_fd(char c, int fd)', ['write']),
-	'ft_putstr_fd'	: ProjectFile('ft_putstr_fd', 'void\tft_putstr_fd(char *s, int fd)', ['write']),
-	'ft_putendl_fd'	: ProjectFile('ft_putendl_fd', 'void\tft_putendl_fd(char *s, int fd)', ['write']),
-	'ft_putnbr_fd'	: ProjectFile('ft_putnbr_fd', 'void\tft_putnbr_fd(int n, int fd)', ['write'])
-}
-
-bonus_files = {
-	'ft_lstnew_bonus' 		: ProjectFile('ft_lstnew' , 't_list\t*ft_lstnew(void *content)', ['malloc']),
-	'ft_lstadd_front_bonus' : ProjectFile('ft_lstadd_front', 'void\tft_lstadd_front(t_list **lst, t_list *new)', None),
-	'ft_lstsize_bonus' 		: ProjectFile('ft_lstsize' , 'int\tft_lstsize(t_list *lst)', None),
-	'ft_lstlast_bonus' 		: ProjectFile('ft_lstlast' , 't_list\t*ft_lstlast(t_list *lst)', None),
-	'ft_lstadd_back_bonus' 	: ProjectFile('ft_lstadd_back', 'void\tft_lstadd_back(t_list **lst, t_list *new)', None),
-	'ft_lstdelone_bonus' 	: ProjectFile('ft_lstdelone' , 'void\tft_lstdelone(t_list *lst, void (*del)(void *))', ['free']),
-	'ft_lstclear_bonus' 	: ProjectFile('ft_lstclear' , 'void\tft_lstclear(t_list **lst, void (*del)(void *))', ['free']),
-	'ft_lstiter_bonus' 		: ProjectFile('ft_lstiter' , 'void\tft_lstiter(t_list *lst, void (*f)(void *))', None),
-	'ft_lstmap_bonus' 		: ProjectFile('ft_lstmap' , 't_list\t*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))', ['malloc', 'free'])
-}
-
-unknown_files = {}
-parser_files = ['parser.py', 'ProjectFile.py']
-
-def print_separator(title, c1, c2, color):
-	print('\n\t' + 25*c1 + color + f' {title} ' + Style.RESET_ALL + 25*c2 + '\n')
-
-def read_delivered_files():
-	for entry in entries:
-		filename = entry.replace('.c', '')
-
-		if filename in parser_files:
-			continue
-		elif part1_files.get(filename):
-			part1_files[filename].wasDelivered = True
-		elif part2_files.get(filename):
-			part2_files[filename].wasDelivered = True
-		elif bonus_files.get(filename):
-			bonus_files[filename].wasDelivered = True
-		else:
-			unknown_files[entry] = ProjectFile(filename, None, None)
-			unknown_files[entry].wasDelivered = True
-
-def print_files(dict, expected, color):
-	dict_list = list(dict.items())
-	dict_list.sort()
-
-	count = 0
-	for item in dict_list:
-		if item[1].wasDelivered == expected:
-			print(f'\t{color}{item[0].ljust(20)}{Style.RESET_ALL}', end='')
-			count += 1
+class Parser:
+	def __init__(self, entries, override) -> None:
+		self.entries = entries
+		self.override = override
+		
+	def parse_unknown_files(self, dict):
+		if input('Press ENTER to continue.') == '':
+			os.system('clear')
+			print_title('UNKNOWN FILES')
 			
-			if count % 3 == 0:
-				print()
-	print('\n')
+			if len(dict) > 0:
+				print(f"You have {Fore.RED}{len(list(dict.values()))}{Style.RESET_ALL} unknown file(s): \n")
+				self.print_files(dict, True, Fore.RED)
+				print_separator('FAILURE', '>', '<', Fore.RED)
+				
+				if input('Proceed anyway (y/n)? ') == 'n':
+					exit(-1)
+			else:
+				print(f"No unknown files were found")
+				print_separator('SUCCESS', '>', '<', Fore.GREEN)
 
-def parse_filenames(dict):
-	num_total = len(list(dict.keys()))
-	num_correct = str(len(list(filter(lambda x : x.wasDelivered == True, dict.values()))))
-	num_missing = str(len(list(filter(lambda x : x.wasDelivered == False, dict.values()))))
+	def parse_filenames(self, dict, title):
+		if input('Press ENTER to continue.') == '':
+			os.system('clear')
+			print_title(title)
+			
+			num_total = len(list(dict.keys()))
+			num_correct = str(len(list(filter(lambda x : x.wasDelivered == True, dict.values()))))
+			num_missing = str(len(list(filter(lambda x : x.wasDelivered == False, dict.values()))))
 
-	print(f'Correct files: {Fore.GREEN}{num_correct}{Style.RESET_ALL}\n')
+			print(f'Correct files: {Fore.GREEN}{num_correct}{Style.RESET_ALL}\n')
 
-	if int(num_correct) > 0:
-		print_files(dict, True, Fore.LIGHTGREEN_EX)
-		
-		if int(num_correct) == int(num_total):
+			if int(num_correct) > 0:
+				self.print_files(dict, True, Fore.LIGHTGREEN_EX)
+				
+				if int(num_correct) == int(num_total):
+					print_separator('SUCCESS', '>', '<', Fore.GREEN)
+					return
+
+			print(f'Missing files: {Fore.RED}{num_missing}{Style.RESET_ALL}\n')
+			self.print_files(dict, False, Fore.LIGHTRED_EX)
+			print_separator('FAILURE', '>', '<', Fore.RED)
+			if not self.override:
+				exit(-1)
+
+	def parse_norminette_result(self):
+		if input('Press ENTER to continue.') == '':
+			os.system('clear')
+			print_title('NORMINETTE')
+			
+			for entry in self.entries:
+				if entry.endswith('.c'):
+					os.system('norminette -R checkForbiddenSourceHeader ' + entry)
+				elif entry.endswith('.h'):
+					os.system('norminette -R checkDefine ' + entry)
+
+			print()
+
+	def parse_function_prototypes(self, dict):
+		if input('Press ENTER to continue.') == '':
+			os.system('clear')
+			print_title('FUNCTION PROTOTYPES')
+
+			wrong_headers = []
+			for func in list(filter(lambda x : x.find("ft_") != -1, dict.keys())):
+				wrong_headers.append(dict[func].check_header())
+			
+			wrong_headers = list(filter(lambda x : x != '', wrong_headers))
+			num_wrong_headers = len(wrong_headers)
+
+			if num_wrong_headers != 0:
+				print(f"There are {Fore.RED}{num_wrong_headers}{Style.RESET_ALL} wrong headers: \n")
+				for func in wrong_headers:
+					print(f'\t-> {Fore.RED}{func}{Style.RESET_ALL}')
+				print_separator('FAILURE', '>', '<', Fore.RED)
+			else:
+				print(f"All function headers are correct! \n")
+				print_separator('SUCCESS', '>', '<', Fore.GREEN)
+
+	def print_files(self, dict, expected, color):	
+		dict_list = list(dict.items())
+		dict_list.sort()
+
+		count = 0
+		for item in dict_list:
+			if item[1].wasDelivered == expected:
+				print(f'\t{color}{item[0].ljust(20)}{Style.RESET_ALL}', end='')
+				count += 1
+				
+				if count % 3 == 0:
+					print()
+		print('\n')
+
+	def print_unknown_files(self, dict):
+		print_title('UNKNOWN FILES')
+
+		if len(dict) > 0:
+			print(f"You have {Fore.RED}{len(list(dict.values()))}{Style.RESET_ALL} unknown file(s): \n")
+			self.print_files(dict, True, Fore.RED)
+			print_separator('FAILURE', '>', '<', Fore.RED)
+			
+			if input('Proceed anyway (y/n)? ') == 'n':
+				exit(-1)
+		else:
+			print(f"No unknown files were found")
 			print_separator('SUCCESS', '>', '<', Fore.GREEN)
-			return
-
-	print(f'Missing files: {Fore.RED}{num_missing}{Style.RESET_ALL}\n')
-	print_files(dict, False, Fore.LIGHTRED_EX)
-	print_separator('FAILURE', '>', '<', Fore.RED)
-	if not override:
-		exit(-1)
-	
-def parse_function_headers():
-	print(f'{Fore.LIGHTYELLOW_EX}FUNCTION HEADERS CHECKING{Style.RESET_ALL}')
-
-	wrong_headers = []
-	full_dict = part1_files
-	full_dict.update(part2_files)
-	full_dict.update(bonus_files)
-
-	for func in list(filter(lambda x : x.find("ft_") != -1, full_dict.keys())):
-		wrong_headers.append(full_dict[func].check_header())
-	
-	wrong_headers = list(filter(lambda x : x != '', wrong_headers))
-	print(wrong_headers)
-
-	num_wrong_headers = len(wrong_headers)
-	
-	if num_wrong_headers != 0:
-		print(f"There are {Fore.RED}{num_wrong_headers}{Style.RESET_ALL} wrong headers: \n")
-		for func in wrong_headers:
-			print(f'\t-> {Fore.RED}{func}{Style.RESET_ALL}')
-		print_separator('FAILURE', '>', '<', Fore.RED)
-	else:
-		print(f"All function headers are correct! \n")
-		print_separator('SUCCESS', '>', '<', Fore.GREEN)
-	
-
-def parse_norminette_result():
-	for entry in entries:
-		if entry.endswith('.c'):
-			os.system('norminette -R checkForbiddenSourceHeader ' + entry)
-		elif entry.endswith('.h'):
-			os.system('norminette -R checkDefine ' + entry)
-
-'''
-	1 - Parse filenames and check if those are correct
-	2 - Next up, launch a shell command and grab any errors
-	3 - Open each file and check for the corresponding header
-	4 - Generate tests for each group of functions that can receive the same arguments
- '''
-
-if __name__ == '__main__':
-	os.system('clear')
-	####################################### 1 #######################################
-	read_delivered_files()
-
-	print(f'{Fore.LIGHTYELLOW_EX}UNKNOWN FILES{Style.RESET_ALL}')
-	if len(unknown_files) > 0:
-		print(f"You have {Fore.RED}{len(list(unknown_files.values()))}{Style.RESET_ALL} unknown file(s): \n")
-		print_files(unknown_files, True, Fore.RED)
-		print_separator('FAILURE', '>', '<', Fore.RED)
-		
-		if input('Proceed anyway (y/n)? ') == 'n':
-			exit(-1)
-	else:
-		print(f"No unknown files were found")
-		print_separator('SUCCESS', '>', '<', Fore.GREEN)
-
-	if input('-> Press ENTER to continue.') == '':
-		os.system('clear')
-		print(f'{Fore.LIGHTYELLOW_EX}PART I{Style.RESET_ALL}')
-		parse_filenames(part1_files)
-
-	if input('-> Press ENTER to continue.') == '':
-		os.system('clear')
-		print(f'{Fore.LIGHTYELLOW_EX}PART II{Style.RESET_ALL}')
-		parse_filenames(part2_files)
-
-	response = input('Did you implement the bonus part (y/n)? ')
-	if response.casefold()[0] == 'y':
-		os.system('clear')
-		print(f'{Fore.LIGHTYELLOW_EX}BONUS PART{Style.RESET_ALL}')
-		parse_filenames(bonus_files)
-
-	####################################### 2 #######################################
-	
-	if input('-> Press ENTER to continue.') == '':
-		os.system('clear')
-		print(f'{Fore.LIGHTYELLOW_EX}NORMINETTE{Style.RESET_ALL}')
-		parse_norminette_result()
-	
-	####################################### 3 #######################################
-
-	if input('-> Press ENTER to continue.') == '':
-		os.system('clear')
-		parse_function_headers()
