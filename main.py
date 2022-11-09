@@ -93,6 +93,7 @@ def read_delivered_files():
 if __name__ == '__main__':
 	os.system('clear')
 	print_menu()
+	print_options()
 
 	full_dict = copy.deepcopy(part1_files)
 	full_dict.update(part2_files)
