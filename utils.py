@@ -2,6 +2,7 @@ from colorama import Style
 from colorama import Fore
 import random
 
+
 menu_options = {
 	'1' : 'Check for forbidden files',
 	'2' : 'Check filenames for Mandatory Part',

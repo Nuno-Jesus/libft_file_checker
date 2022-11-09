@@ -8,18 +8,17 @@ class ProjectFile:
 		self.wasDelivered = False
 
 	def check_prototype(self):
+		found_name = False
 		f = open(self.func + '.c', 'r')
 
 		line = f.readline()
 		while line != '':
 			line = line.replace('\n', '')
+			
 			if line == self.header:
 				f.close()
-				return {self.func : f'{correct_color}[CORRECT]{reset}'}
-			elif line.find(self.func + '(') > 0:
-				f.close()
-				return {self.func : f'{warning_color}[MISMATCHING]{reset}'}
+				return {self.func : f'[{correct_color}CORRECT{reset}]'}
 
 			line = f.readline()
 		f.close()
-		return {self.func : f'{danger_color}[NOT FOUND]{reset}'}
+		return {self.func : f'[{danger_color}NOT FOUND{reset}]'}
