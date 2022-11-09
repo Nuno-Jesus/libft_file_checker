@@ -14,9 +14,9 @@ class Parser:
 			print_title('UNKNOWN FILES')
 			
 			if len(dict) > 0:
-				print(f"You have {wrong_color}{len(list(dict.values()))}{Style.RESET_ALL} unknown file(s): \n")
-				self.print_files(dict, True, wrong_color)
-				print_separator('FAILURE', '>', '<', wrong_color)
+				print(f"You have {danger_color}{len(list(dict.values()))}{reset} unknown file(s): \n")
+				self.print_files(dict, True, danger_color)
+				print_separator('FAILURE', '>', '<', danger_color)
 			else:
 				print(f"No unknown files were found")
 				print_separator('SUCCESS', '>', '<', correct_color)
@@ -31,16 +31,16 @@ class Parser:
 			num_missing = str(len(list(filter(lambda x : x.wasDelivered == False, dict.values()))))
 
 			if int(num_correct) > 0:
-				print(f'Correct files: {correct_color}{num_correct}{Style.RESET_ALL}\n')
+				print(f'Correct files: {correct_color}{num_correct}{reset}\n')
 				self.print_files(dict, True, correct_color)
 				
 				if int(num_correct) == int(num_total):
 					print_separator('SUCCESS', '>', '<', correct_color)
 					return
 
-			print(f'Missing files: {wrong_color}{num_missing}{Style.RESET_ALL}\n')
+			print(f'Missing files: {danger_color}{num_missing}{reset}\n')
 			self.print_files(dict, False, Fore.LIGHTRED_EX)
-			print_separator('FAILURE', '>', '<', wrong_color)
+			print_separator('FAILURE', '>', '<', danger_color)
 
 	def parse_norminette_result(self):
 		if input('Press ENTER to continue.') == '':
@@ -60,24 +60,25 @@ class Parser:
 			os.system('clear')
 			print_title('FUNCTION PROTOTYPES')
 
-			wrong_headers = []
-			for func in list(filter(lambda x : x.find("ft_") != -1, dict.keys())):
+			c_files = list(filter(lambda x : x.startswith('ft_'), dict.keys()))
+	
+			res = {}
+			for func in c_files:
 				if func + '.c' in self.entries:
-					wrong_headers.append(dict[func].check_header())
+					res.update(dict[func].check_prototype())
 				else:
-					print(f'Cannot parse {wrong_color}{func}' + f'.c{Style.RESET_ALL} file since it doesn\'t exist')
-			
-			wrong_headers = list(filter(lambda x : x != '', wrong_headers))
+					res.update({func : f'[{danger_color}FILE NOT DELIVERED{reset}]'})
+		
+			wrong_headers = list(filter(lambda x : x[1].find('MISMATCHING') or x[1].find('NOT FOUND'), res))
 			num_wrong_headers = len(wrong_headers)
 
+			for item in res.items():
+				print(f'{item[0].ljust(20)}{item[1]}')
 			if num_wrong_headers != 0:
-				print(f"There are {wrong_color}{num_wrong_headers}{Style.RESET_ALL} wrong headers: \n")
-				for func in wrong_headers:
-					print(f'\t-> {wrong_color}{func}{Style.RESET_ALL}')
-				print_separator('FAILURE', '>', '<', wrong_color)
+				print_separator('FAILURE', '>', '<', danger_color)
 			else:
-				print(f"All function headers are correct! \n")
 				print_separator('SUCCESS', '>', '<', correct_color)
+				print(f"All function headers are correct! \n")
 
 	def print_files(self, dict, expected, color):	
 		dict_list = list(dict.items())
@@ -86,7 +87,7 @@ class Parser:
 		count = 0
 		for item in dict_list:
 			if item[1].wasDelivered == expected:
-				print(f'\t{color}{item[0].ljust(20)}{Style.RESET_ALL}', end='')
+				print(f'\t{color}{item[0].ljust(20)}{reset}', end='')
 				count += 1
 				
 				if count % 3 == 0:
@@ -97,9 +98,9 @@ class Parser:
 		print_title('UNKNOWN FILES')
 
 		if len(dict) > 0:
-			print(f"You have {wrong_color}{len(list(dict.values()))}{Style.RESET_ALL} unknown file(s): \n")
-			self.print_files(dict, True, wrong_color)
-			print_separator('FAILURE', '>', '<', wrong_color)
+			print(f"You have {danger_color}{len(list(dict.values()))}{reset} unknown file(s): \n")
+			self.print_files(dict, True, danger_color)
+			print_separator('FAILURE', '>', '<', danger_color)
 			
 			if input('Proceed anyway (y/n)? ') == 'n':
 				exit(-1)

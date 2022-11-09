@@ -12,7 +12,9 @@ menu_options = {
 	'7' : 'Full run (1 - 6)',
 }
 
-wrong_color = Fore.LIGHTRED_EX
+reset = Style.RESET_ALL
+danger_color = Fore.LIGHTRED_EX
+warning_color = Fore.LIGHTYELLOW_EX
 correct_color = Fore.LIGHTGREEN_EX
 main_menu_color = Fore.LIGHTCYAN_EX
 colors = [main_menu_color, Fore.LIGHTWHITE_EX]
@@ -29,16 +31,16 @@ def print_menu():
 
 	print()
 	for char in menu_string:
-		print(f'{colors[random.randint(0, len(colors) - 1)]}{char}{Style.RESET_ALL}', end = '')
+		print(f'{colors[random.randint(0, len(colors) - 1)]}{char}{reset}', end = '')
 	print()
 
 def print_options():
 	for option in menu_options.items():
-		print(f'\t[{main_menu_color}{option[0]}{Style.RESET_ALL}] - {option[1]}')
+		print(f'\t[{main_menu_color}{option[0]}{reset}] - {option[1]}')
 	print()
 
 def print_separator(title, c1, c2, color):
-	print('\n\t' + 25*c1 + color + f' {title} ' + Style.RESET_ALL + 25*c2 + '\n')
+	print('\n\t' + 25*c1 + color + f' {title} ' + reset + 25*c2 + '\n')
 
 def print_title(title):
-	print(f'{Fore.LIGHTYELLOW_EX}{title}{Style.RESET_ALL}')
+	print(f'{Fore.LIGHTYELLOW_EX}{title}{reset}')

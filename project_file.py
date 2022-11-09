@@ -1,3 +1,5 @@
+from utils import *
+
 class ProjectFile:
 	def __init__(self, func, header, allowed_funcs):
 		self.func = func
@@ -5,15 +7,19 @@ class ProjectFile:
 		self.allowed_funcs = allowed_funcs
 		self.wasDelivered = False
 
-	def check_header(self):
+	def check_prototype(self):
 		f = open(self.func + '.c', 'r')
 
 		line = f.readline()
 		while line != '':
-			if line.find(self.header) != -1:
+			line = line.replace('\n', '')
+			if line == self.header:
 				f.close()
-				return ''
+				return {self.func : f'{correct_color}[CORRECT]{reset}'}
+			elif line.find(self.func + '(') > 0:
+				f.close()
+				return {self.func : f'{warning_color}[MISMATCHING]{reset}'}
 
 			line = f.readline()
 		f.close()
-		return self.func
+		return {self.func : f'{danger_color}[NOT FOUND]{reset}'}
