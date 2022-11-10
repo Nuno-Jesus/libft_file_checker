@@ -1,3 +1,4 @@
+import sys
 from utils import *
 
 class ProjectFile:
@@ -8,8 +9,7 @@ class ProjectFile:
 		self.wasDelivered = False
 
 	def check_prototype(self):
-		found_name = False
-		f = open(self.func + '.c', 'r')
+		f = open(path + self.func + '.c', 'r')
 
 		line = f.readline()
 		while line != '':

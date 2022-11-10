@@ -1,24 +1,32 @@
+import random
+import os
+import copy
+import subprocess
+
 from colorama import Style
 from colorama import Fore
-import random
 
+# Path to search for the files on (YES, YOU MAY CHANGE THIS)
+path = '../42-cursus/libft/'
 
-menu_options = {
-	'1' : 'Check for forbidden files',
-	'2' : 'Check filenames for Mandatory Part',
-	'3' : 'Check filenames for Bonus Part',
-	'4' : 'Run the norminette in every file',
-	'5' : 'Check incorrect function prototypes in .c files',
-	'6' : 'Check incorrect function prototypes in libft.h',
-	'7' : 'Full run (1 - 6)',
-}
-
+# Used colors across the files
 reset = Style.RESET_ALL
 danger_color = Fore.LIGHTRED_EX
 warning_color = Fore.LIGHTYELLOW_EX
 correct_color = Fore.LIGHTGREEN_EX
 main_menu_color = Fore.LIGHTCYAN_EX
 colors = [main_menu_color, Fore.LIGHTWHITE_EX]
+
+# This is used to easily print the right string on the given option
+menu_options = {
+	'1' : 'Check for forbidden files',
+	'2' : 'Check filenames for Mandatory Part',
+	'3' : 'Check filenames for Bonus Part',
+	'4' : 'Run the norminette',
+	'5' : 'Look for incorrect function prototypes in \'.c\' files',
+	'6' : 'Look for incorrect function prototypes in \'libft.h\'',
+	'7' : 'Full run (1 - 7)',
+}
 
 def print_menu():
 	menu_string = \
@@ -30,12 +38,12 @@ def print_menu():
 	'\t\t     #+#    #+#                 #+#     #+#     #+# #+#     #+# #+#        \n' + \
 	'\t\t    ###   ########              ###     ########### ########### ###########\n'
 
+	os.system('clear')
 	print()
 	for char in menu_string:
 		print(f'{colors[random.randint(0, len(colors) - 1)]}{char}{reset}', end = '')
 	print()
 
-def print_options():
 	for option in menu_options.items():
 		print(f'\t[{main_menu_color}{option[0]}{reset}] - {option[1]}')
 	print()

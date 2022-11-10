@@ -49,9 +49,9 @@ class Parser:
 			
 			for entry in self.entries:
 				if entry.endswith('.c'):
-					os.system('norminette -R checkForbiddenSourceHeader ' + entry)
+					os.system(f'norminette -R checkForbiddenSourceHeader {path}{entry}')
 				elif entry.endswith('.h'):
-					os.system('norminette -R checkDefine ' + entry)
+					os.system(f'norminette -R checkDefine {path}{entry}')
 
 			print()
 
@@ -62,23 +62,22 @@ class Parser:
 
 			c_files = list(filter(lambda x : x.startswith('ft_'), dict.keys()))
 	
-			res = {}
+			norm_results = {}
 			for func in c_files:
 				if func + '.c' in self.entries:
-					res.update(dict[func].check_prototype())
+					norm_results.update(dict[func].check_prototype())
 				else:
-					res.update({func : f'[{danger_color}FILE NOT DELIVERED{reset}]'})
+					norm_results.update({func : f'[{danger_color}FILE NOT DELIVERED{reset}]'})
 		
-			wrong_headers = list(filter(lambda x : x[1].find('MISMATCHING') or x[1].find('NOT FOUND'), res))
+			wrong_headers = list(filter(lambda x : x[1].find('NOT FOUND') != -1, norm_results))
 			num_wrong_headers = len(wrong_headers)
 
-			for item in res.items():
-				print(f'{item[0].ljust(20)}{item[1]}')
+			for (file, result) in norm_results.items():
+				print(f'{file.ljust(20)}{result}')
 			if num_wrong_headers != 0:
 				print_separator('FAILURE', '>', '<', danger_color)
 			else:
 				print_separator('SUCCESS', '>', '<', correct_color)
-				print(f"All function headers are correct! \n")
 
 	def print_files(self, dict, expected, color):	
 		dict_list = list(dict.items())

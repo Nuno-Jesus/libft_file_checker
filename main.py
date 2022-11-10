@@ -1,21 +1,11 @@
-import os
-import copy
-
-from pip import main
-from colorama import Fore
-from colorama import Style
-from setuptools import Require
-
 from project_file import ProjectFile
 from parser import Parser
 from utils import *
 
 #List the files in the current directory
-entries = os.listdir()
+entries = os.listdir(path)
 
-# Overrides parser halting when an error pops up
-override = True
-
+# The following dictionaries map function/file names to an object containing the necessary information
 part1_files = {
 	'ft_memset' 	: ProjectFile('ft_memset', 'void\t*ft_memset(void *s, int c, size_t n)', []),
 	'ft_bzero' 		: ProjectFile('ft_bzero' , 'void\tft_bzero(void *s, size_t n)', []),
@@ -61,26 +51,27 @@ part2_files = {
 
 bonus_files = {
 	'ft_lstnew' 		: ProjectFile('ft_lstnew' , 't_list\t*ft_lstnew(void *content)', ['malloc']),
-	'ft_lstadd_front' : ProjectFile('ft_lstadd_front', 'void\tft_lstadd_front(t_list **lst, t_list *new)', None),
+	'ft_lstadd_front' 	: ProjectFile('ft_lstadd_front', 'void\tft_lstadd_front(t_list **lst, t_list *new)', None),
 	'ft_lstsize' 		: ProjectFile('ft_lstsize' , 'int\tft_lstsize(t_list *lst)', None),
 	'ft_lstlast' 		: ProjectFile('ft_lstlast' , 't_list\t*ft_lstlast(t_list *lst)', None),
 	'ft_lstadd_back' 	: ProjectFile('ft_lstadd_back', 'void\tft_lstadd_back(t_list **lst, t_list *new)', None),
-	'ft_lstdelone' 	: ProjectFile('ft_lstdelone' , 'void\tft_lstdelone(t_list *lst, void (*del)(void *))', ['free']),
-	'ft_lstclear' 	: ProjectFile('ft_lstclear' , 'void\tft_lstclear(t_list **lst, void (*del)(void *))', ['free']),
+	'ft_lstdelone' 		: ProjectFile('ft_lstdelone' , 'void\tft_lstdelone(t_list *lst, void (*del)(void *))', ['free']),
+	'ft_lstclear' 		: ProjectFile('ft_lstclear' , 'void\tft_lstclear(t_list **lst, void (*del)(void *))', ['free']),
 	'ft_lstiter' 		: ProjectFile('ft_lstiter' , 'void\tft_lstiter(t_list *lst, void (*f)(void *))', None),
 	'ft_lstmap' 		: ProjectFile('ft_lstmap' , 't_list\t*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))', ['malloc', 'free'])
 }
 
+# Dictionary to be filled with extra files found when parsing
 unknown_files = {}
-parser_files = ['parser.py', 'project_file.py', 'test.py', 'utils.py', 'main.py']
 
+# Flips the boolean value in each entry of the dictionary if the file is found
 def read_delivered_files():
+	entries.sort()
+
 	for entry in entries:
 		filename = entry.replace('.c', '')
 
-		if filename in parser_files:
-			continue
-		elif part1_files.get(filename):
+		if part1_files.get(filename):
 			part1_files[filename].wasDelivered = True
 		elif part2_files.get(filename):
 			part2_files[filename].wasDelivered = True
@@ -91,10 +82,9 @@ def read_delivered_files():
 			unknown_files[entry].wasDelivered = True
 
 if __name__ == '__main__':
-	os.system('clear')
 	print_menu()
-	print_options()
 
+	# Merges all 3 dictionaries into a new one to be easily used on prototype parsing
 	full_dict = copy.deepcopy(part1_files)
 	full_dict.update(part2_files)
 	full_dict.update(bonus_files)
@@ -105,21 +95,24 @@ if __name__ == '__main__':
 	option = input('Choose your option: ')
 	if option == '1':
 		parser.parse_unknown_files(unknown_files)
+	elif option == '2':
+		parser.parse_filenames(part1_files, 'PART I')
+		parser.parse_filenames(part2_files, 'PART II')
+	elif option == '3':
+		parser.parse_filenames(bonus_files, 'BONUS PART')
+	elif option == '4':
+		parser.parse_norminette_result()
+	elif option == '5':
+		parser.parse_function_prototypes(full_dict)
+	elif option == '6':
+		pass	
+	elif option == '7':
+		parser.parse_unknown_files(unknown_files)
 		parser.parse_filenames(part1_files, 'PART I')
 		parser.parse_filenames(part2_files, 'PART II')
 		parser.parse_filenames(bonus_files, 'BONUS PART')
 		parser.parse_norminette_result()
 		parser.parse_function_prototypes(full_dict)
-	elif option == '2':
-		parser.parse_unknown_files(unknown_files)
-	elif option == '3':
-		parser.parse_filenames(part1_files, 'PART I')
-		parser.parse_filenames(part2_files, 'PART II')
-	elif option == '4':
-		parser.parse_norminette_result()
-	elif option == '5':
-		parser.parse_function_prototypes(full_dict)
-
 
 	
 	
