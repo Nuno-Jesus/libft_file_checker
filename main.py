@@ -87,6 +87,8 @@ if __name__ == '__main__':
 	full_dict.update(part2_files)
 	full_dict.update(bonus_files)
 
+	full_dict2 = copy.deepcopy(full_dict)
+
 	read_delivered_files()
 	parser = Parser(entries, True)
 
@@ -103,14 +105,15 @@ if __name__ == '__main__':
 	elif option == '5':
 		parser.parse_function_prototypes(full_dict)
 	elif option == '6':
-		pass	
+		parser.parse_headerfile_prototypes(full_dict2)	
+		pass
 	elif option == '7':
 		parser.parse_unknown_files(unknown_files)
 		parser.parse_filenames(part1_files, 'PART I')
 		parser.parse_filenames(part2_files, 'PART II')
 		parser.parse_filenames(bonus_files, 'BONUS PART')
 		parser.parse_norminette_result()
-		parser.parse_function_prototypes(full_dict)
+		parser.parse_function_prototypes(full_dict2)
 
 	
 	

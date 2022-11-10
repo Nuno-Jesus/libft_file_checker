@@ -79,6 +79,41 @@ class Parser:
 			else:
 				print_separator('SUCCESS', '>', '<', correct_color)
 
+	def parse_headerfile_prototypes(self, dict):
+		if 'libft.h' not in self.entries:
+			print(f'libft.h\t\t[{danger_color}FILE NOT DELIVERED{reset}]')
+			return
+
+		possible_headers = list(map(lambda pair : pair[1].header, dict.items()))
+		possible_headers = list(filter(lambda x : x is not None, possible_headers))
+		possible_headers = [h.replace('\t', '') + ';' for h in possible_headers]
+		print('POSSIBLE HEADERS')
+		for h in possible_headers:
+			print(h)
+		
+		
+		unknown_headers = []
+
+		f = open(path + 'libft.h', 'r')
+
+		line = f.readline()
+		while line != '':
+			line = line.replace('\n', '')
+			line = line.replace('\t', '')
+			print(f'{danger_color}{line}{reset}')
+			if line.endswith(');') and line not in possible_headers:
+				unknown_headers.append(line)
+			elif line in possible_headers:
+				#print('Line to remove' + line)
+				possible_headers.remove(line)
+
+			line = f.readline()
+
+		f.close()
+		print('UNKNOWN')
+		for h in unknown_headers:
+			print(h)
+
 	def print_files(self, dict, expected, color):	
 		dict_list = list(dict.items())
 		dict_list.sort()
