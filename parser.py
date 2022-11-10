@@ -87,10 +87,10 @@ class Parser:
 		possible_headers = list(map(lambda pair : pair[1].header, dict.items()))
 		possible_headers = list(filter(lambda x : x is not None, possible_headers))
 		possible_headers = [h.replace('\t', '') + ';' for h in possible_headers]
-		print('POSSIBLE HEADERS')
+		""" print('POSSIBLE HEADERS')
 		for h in possible_headers:
 			print(h)
-		
+		 """
 		
 		unknown_headers = []
 
@@ -98,14 +98,14 @@ class Parser:
 
 		line = f.readline()
 		while line != '':
-			line = line.replace('\n', '')
-			line = line.replace('\t', '')
-			print(f'{danger_color}{line}{reset}')
-			if line.endswith(');') and line not in possible_headers:
+			tmp = line.replace('\n', '')
+			tmp = tmp.replace('\t', '')
+			#print(f'{danger_color}{line}{reset}')
+			if tmp.endswith(');') and tmp not in possible_headers:
 				unknown_headers.append(line)
-			elif line in possible_headers:
+			elif tmp in possible_headers:
 				#print('Line to remove' + line)
-				possible_headers.remove(line)
+				possible_headers.remove(tmp)
 
 			line = f.readline()
 
