@@ -58,61 +58,87 @@ class Parser:
 	def parse_function_prototypes(self, dict):
 		if input('Press ENTER to continue.') == '':
 			os.system('clear')
-			print_title('FUNCTION PROTOTYPES')
+			print_title('C FILES FUNCTION PROTOTYPES')
 
 			c_files = list(filter(lambda x : x.startswith('ft_'), dict.keys()))
 	
-			norm_results = {}
+			results = {}
 			for file in c_files:
 				if file in self.entries:
-					norm_results.update(dict[file].check_prototype())
+					results.update(dict[file].check_prototype())
 				else:
-					norm_results.update({file : f'[{danger_color}FILE NOT DELIVERED{reset}]'})
-		
-			wrong_headers = list(filter(lambda x : x[1].find('NOT FOUND') != -1, norm_results))
-			num_wrong_headers = len(wrong_headers)
+					results.update({file : f'[{danger_color}FILE NOT DELIVERED{reset}]'})
 
-			for (file, result) in norm_results.items():
-				print(f'{file.ljust(20)}{result}')
-			if num_wrong_headers != 0:
+			num_correct = len(list(filter(lambda x : x[1].find('CORRECT') != -1, results.items())))
+			num_wrong = len(list(filter(lambda x : x[1].find('MISMATCHING') != -1, results.items())))
+			num_not_delivered = len(list(filter(lambda x : x[1].find('FILE NOT DELIVERED') != -1, results.items())))
+
+			print(f'You have {correct_color}{num_correct}{reset} files with the correct prototype, ' 
+			f'{danger_color}{num_wrong}{reset} files with a mismatching/not found prototype and '
+			f'{warning_color}{num_not_delivered}{reset} non-delivered files.\n')
+			
+
+			for (file, result) in results.items():
+				print(f'{result.ljust(30)}{file}')
+			if num_wrong != 0:
 				print_separator('FAILURE', '>', '<', danger_color)
 			else:
 				print_separator('SUCCESS', '>', '<', correct_color)
 
-	def parse_headerfile_prototypes(self, dict):
-		if 'libft.h' not in self.entries:
-			print(f'libft.h\t\t[{danger_color}FILE NOT DELIVERED{reset}]')
-			return
+	def parse_headerfile_prototypes(self, full_dict):
+		if input('Press ENTER to continue.') == '':
+			os.system('clear')
+			print_title('LIBFT.H FUNCTION PROTOTYPES')
+			
+			if 'libft.h' not in self.entries:
+				print(f'libft.h\t\t[{danger_color}FILE NOT DELIVERED{reset}]')
+				return
 
-		possible_headers = list(map(lambda pair : pair[1].header, dict.items()))
-		possible_headers = list(filter(lambda x : x is not None, possible_headers))
-		possible_headers = [h.replace('\t', '') + ';' for h in possible_headers]
-		""" print('POSSIBLE HEADERS')
-		for h in possible_headers:
-			print(h)
-		 """
-		
-		unknown_headers = []
+			possible_headers = {}
+			for key, func in full_dict.items():
+				if key.startswith('ft_'):
+					possible_headers.update({''.join(filter(lambda c : c != '\t' and c != '\n', func.header)) : key})
+			
+			#print(possible_headers)
+			 
 
-		f = open(path + 'libft.h', 'r')
-
-		line = f.readline()
-		while line != '':
-			tmp = line.replace('\n', '')
-			tmp = tmp.replace('\t', '')
-			#print(f'{danger_color}{line}{reset}')
-			if tmp.endswith(');') and tmp not in possible_headers:
-				unknown_headers.append(line)
-			elif tmp in possible_headers:
-				#print('Line to remove' + line)
-				possible_headers.remove(tmp)
+			headers_result = {}
+			f = open(path + 'libft.h', 'r')
 
 			line = f.readline()
+			while line != '':
+				# Filter the current line out of tabs, spaces
+				tmp = ''.join(filter(lambda c : c != '\t' and c != '\n', line)).strip(';')
+				
+				if line.endswith(');\n') and tmp not in possible_headers.keys():
+					headers_result.update({line.strip('\n') : f'[{warning_color}UNKNOWN{reset}]'})
+				elif tmp in possible_headers.keys():
+					headers_result.update({possible_headers[tmp].strip('.c') : f'[{correct_color}CORRECT{reset}]'})
+					possible_headers.pop(tmp)
 
-		f.close()
-		print('UNKNOWN')
-		for h in unknown_headers:
-			print(h)
+				line = f.readline()
+			f.close()
+
+			# Any header that wasn't removed from the dict, wasn't found
+			for func in possible_headers.values():
+				headers_result.update({full_dict[func].header : f'[{danger_color}NOT FOUND{reset}]'})
+			
+			# Print the overall results
+			num_unknown = len(list(filter(lambda x : x[1].find('UNKNOWN') != -1, headers_result.items())))
+			num_correct = len(list(filter(lambda x : x[1].find('CORRECT') != -1, headers_result.items())))
+			num_wrong = len(list(filter(lambda x : x[1].find('NOT FOUND') != -1, headers_result.items())))
+			
+			print(f'Found {correct_color}{num_correct}{reset} correct prototypes, ' 
+			f'{danger_color}{num_wrong}{reset} wrong prototypes and '
+			f'{warning_color}{num_unknown}{reset} unknown prototypes.\n')
+
+			for (header, res) in headers_result.items():
+				print(res.ljust(20) + ' ' + header)
+
+			if num_wrong != 0:
+				print_separator('FAILURE', '>', '<', danger_color)
+			else:
+				print_separator('SUCCESS', '>', '<', correct_color)
 
 	def print_files(self, dict, expected, color):	
 		dict_list = list(dict.items())
@@ -127,17 +153,3 @@ class Parser:
 				if count % 3 == 0:
 					print()
 		print('\n')
-
-	def print_unknown_files(self, dict):
-		print_title('UNKNOWN FILES')
-
-		if len(dict) > 0:
-			print(f"You have {danger_color}{len(list(dict.values()))}{reset} unknown file(s): \n")
-			self.print_files(dict, True, danger_color)
-			print_separator('FAILURE', '>', '<', danger_color)
-			
-			if input('Proceed anyway (y/n)? ') == 'n':
-				exit(-1)
-		else:
-			print(f"No unknown files were found")
-			print_separator('SUCCESS', '>', '<', correct_color)

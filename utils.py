@@ -6,7 +6,7 @@ import subprocess
 from colorama import Style
 from colorama import Fore
 
-# Path to search for the files on (YES, YOU MAY CHANGE THIS)
+# Path to search for the files on (yes, this is where you change to the correct path)
 path = '../42-cursus/libft/'
 
 # Used colors across the files
@@ -14,8 +14,8 @@ reset = Style.RESET_ALL
 danger_color = Fore.LIGHTRED_EX
 warning_color = Fore.LIGHTYELLOW_EX
 correct_color = Fore.LIGHTGREEN_EX
-main_menu_color = Fore.LIGHTCYAN_EX
-colors = [main_menu_color, Fore.LIGHTWHITE_EX]
+main_menu_color = Fore.LIGHTYELLOW_EX
+colors = [main_menu_color, Fore.LIGHTGREEN_EX]
 
 # This is used to easily print the right string on the given option
 menu_options = {
@@ -25,7 +25,16 @@ menu_options = {
 	'4' : 'Run the norminette',
 	'5' : 'Look for incorrect function prototypes in \'.c\' files',
 	'6' : 'Look for incorrect function prototypes in \'libft.h\'',
-	'7' : 'Full run (1 - 7)',
+	'7' : 'Full run (1 - 6)',
+}
+
+char_map = {
+	'#' : main_menu_color,
+	'+' : Fore.LIGHTCYAN_EX,
+	':' : Fore.LIGHTWHITE_EX,
+	' ' : Fore.WHITE,
+	'\t' : Fore.WHITE,
+	'\n' : Fore.WHITE
 }
 
 def print_menu():
@@ -41,7 +50,7 @@ def print_menu():
 	os.system('clear')
 	print()
 	for char in menu_string:
-		print(f'{colors[random.randint(0, len(colors) - 1)]}{char}{reset}', end = '')
+		print(f'{char_map[char]}{char}{reset}', end = '')
 	print()
 
 	for option in menu_options.items():
