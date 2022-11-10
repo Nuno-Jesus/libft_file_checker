@@ -21,4 +21,4 @@ class ProjectFile:
 
 			line = f.readline()
 		f.close()
-		return {self.func : f'[{danger_color}NOT FOUND{reset}]'}
+		return {self.func : f'[{warning_color}NOT FOUND{reset}]'}

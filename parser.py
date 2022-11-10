@@ -63,11 +63,11 @@ class Parser:
 			c_files = list(filter(lambda x : x.startswith('ft_'), dict.keys()))
 	
 			norm_results = {}
-			for func in c_files:
-				if func + '.c' in self.entries:
-					norm_results.update(dict[func].check_prototype())
+			for file in c_files:
+				if file in self.entries:
+					norm_results.update(dict[file].check_prototype())
 				else:
-					norm_results.update({func : f'[{danger_color}FILE NOT DELIVERED{reset}]'})
+					norm_results.update({file : f'[{danger_color}FILE NOT DELIVERED{reset}]'})
 		
 			wrong_headers = list(filter(lambda x : x[1].find('NOT FOUND') != -1, norm_results))
 			num_wrong_headers = len(wrong_headers)
@@ -84,9 +84,9 @@ class Parser:
 		dict_list.sort()
 
 		count = 0
-		for item in dict_list:
-			if item[1].wasDelivered == expected:
-				print(f'\t{color}{item[0].ljust(20)}{reset}', end='')
+		for (filename, info) in dict_list:
+			if info.wasDelivered == expected:
+				print(f'\t{color}{filename}{reset}', end='')
 				count += 1
 				
 				if count % 3 == 0:
