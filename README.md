@@ -55,7 +55,7 @@ It should prompt you with something similar to this:
 
 | Main Menu |
 |:--:|
-||
+|![image](https://user-images.githubusercontent.com/93390807/201247275-97ef366e-467e-4204-afbf-386d620d8db5.png)|
 
 You should press the char that corresponds to the option you want to run and press ENTER when you're done.
 
@@ -68,7 +68,7 @@ It prints out any extraneous files/folders your repository contains. Here's an e
 
 | Good Example | Bad Example |
 |:--:|:--:|
-|||
+|![image](https://user-images.githubusercontent.com/93390807/201247416-c38b9607-55b8-4dca-bf59-0ec552a249c9.png)|![image](https://user-images.githubusercontent.com/93390807/201247355-c51032fc-4c2b-42e8-9f6c-ccfb7614f8e6.png)|
 
 **2./3. Check filenames for Mandatory/Bonus files**
 
@@ -76,9 +76,10 @@ It prints out the result of checking if every Mandatory/Bonus part file was deli
 
 | Good Example | Bad Example |
 |:--:|:--:|
-|||
+|![image](https://user-images.githubusercontent.com/93390807/201247602-7e256eee-4b4c-4ab6-a0ad-64861ca0818e.png)|![image](https://user-images.githubusercontent.com/93390807/201247674-3de5f2b1-2923-45e2-9f1a-1de58d7b56a1.png)
+|
 
-> <span style='color: orange'> **NOTE**: as it is for now, if you created your bonus files with the "_bonus" as a suffix, the parser will considered it wrong. Since the Moulinette didn't complain about having or not having it, you are free to take it off, at least to parse the files. 
+> <span style='color: orange'> **NOTE**: as it is for now, if you created your bonus files with the "_bonus" as a suffix, the parser will consider it wrong. Since the Moulinette didn't complain about having or not having it, you are free to take it off, at least to parse the files. 
 If you don't, probably the rest of the checks will fail in cascade. I'll fix it in the next patches.</span>
 
 
@@ -105,7 +106,7 @@ In order to minimize this from happening, you should have your files passing the
 
 | Parsing '.c' files | Parsing 'libft.h' file |
 |:--:|:--:|
-|||
+|![image](https://user-images.githubusercontent.com/93390807/201247801-833149e2-b4b8-424e-8e75-982f57c38b92.png)|![image](https://user-images.githubusercontent.com/93390807/201247860-21ca18ed-0533-4f68-89e1-ed7010353d5c.png)|
 
 **7. Full run**
 
