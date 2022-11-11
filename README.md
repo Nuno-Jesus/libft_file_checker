@@ -62,7 +62,7 @@ You should press the char that corresponds to the option you want to run and pre
 ## Can you give me a quick tour about the features and how they work?
 Sure!
 
-**1.** Check for forbidden files
+**1. Check for forbidden files**
 
 It prints out any extraneous files/folders your repository contains. Here's an example:
 
@@ -70,7 +70,7 @@ It prints out any extraneous files/folders your repository contains. Here's an e
 |:--:|:--:|
 |||
 
-**2./3.** Check filenames for Mandatory/Bonus files
+**2./3. Check filenames for Mandatory/Bonus files**
 
 It prints out the result of checking if every Mandatory/Bonus part file was delivered. Unless you chose the last option, you can chose to run this parts separately, since the Bonus part is optional. Here's an example of possible outputs: 
 
@@ -78,15 +78,15 @@ It prints out the result of checking if every Mandatory/Bonus part file was deli
 |:--:|:--:|
 |||
 
-```diff
-! NOTE: as it is for now, if you created your bonus files with the "_bonus" as a suffix, the parser will considered it wrong. Since the Moulinette didn't complain about having or not having it, you are free to take it off, at least to parse the files. If you don't, probably the rest of the checks will fail in cascade. I'll fix it in the next patches.
-```
+> <span style='color: orange'> **NOTE**: as it is for now, if you created your bonus files with the "_bonus" as a suffix, the parser will considered it wrong. Since the Moulinette didn't complain about having or not having it, you are free to take it off, at least to parse the files. 
+If you don't, probably the rest of the checks will fail in cascade. I'll fix it in the next patches.</span>
 
-**4.** Run the Norminette
+
+**4. Run the Norminette**
 
 You all know her. You all know how she looks like. I don't think I need an image for this one (for now...).
 
-**5./6.** Look for incorrect function prototypes in '.c'/'libft.h' files
+**5./6. Look for incorrect function prototypes in '.c'/'libft.h' files**
 
 Like 2 and 3, this two can be done separately, not because they are not mandatory (because both are), but mostly due to modularity. You don't need to go through all the correct parts if you want a specific one. Here are the possible results for a prototype:
 
@@ -100,15 +100,14 @@ Like 2 and 3, this two can be done separately, not because they are not mandator
 	- [**NOT FOUND**] - The same
 	- [**FILE NOT DELIVERED**] - The same
 
-```diff
-! NOTE: as it is for now, the parser considers any prototype that is different from the ones he's looking for, as UNKNOWN. To clarify, if you have the right prototype with 1 more space (for e.g.) he'll display two entries: UNKNOWN and NOT FOUND, because the strings are not an exact match (will be fixed in the next updates). In order to minimize this from happening, you should have your files passing the Norminette.
-```
+> <span style = 'color: orange'> NOTE: as it is for now, the parser considers any prototype that is different from the ones he's looking for, as UNKNOWN. To clarify, if you have the right prototype with 1 more space (for e.g.) he'll display two entries: UNKNOWN and NOT FOUND, because the strings are not an exact match (will be fixed in the next updates). 
+In order to minimize this from happening, you should have your files passing the Norminette.</span>
 
 | Parsing '.c' files | Parsing 'libft.h' file |
 |:--:|:--:|
 |||
 
-**7.** Full run
+**7. Full run**
 
 Runs all of the above.
 
