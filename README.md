@@ -78,7 +78,7 @@ It prints out the result of checking if every Mandatory/Bonus part file was deli
 |:--:|:--:|
 |||
 
-<span style='color: orange'> **NOTE**: as it is for now, if you created your bonus files with the "_bonus" as a suffix, the parser will considered it wrong. Since the Moulinette didn't complain about having or not having it, you are free to take it off, at least to parse the files. 
+> <span style='color: orange'> **NOTE**: as it is for now, if you created your bonus files with the "_bonus" as a suffix, the parser will considered it wrong. Since the Moulinette didn't complain about having or not having it, you are free to take it off, at least to parse the files. 
 If you don't, probably the rest of the checks will fail in cascade. I'll fix it in the next patches.</span>
 
 
@@ -100,7 +100,7 @@ Like 2 and 3, this two can be done separately, not because they are not mandator
 	- [<span style='color:#FF7777'>**NOT FOUND**</span>] - The same
 	- [<span style='color:#FF7777'>**FILE NOT DELIVERED**</span>] - The same
 
-<span style = 'color: orange'> NOTE: as it is for now, the parser considers any prototype that is different from the ones he's looking for, as UNKNOWN. To clarify, if you have the right prototype with 1 more space (for e.g.) he'll display two entries: [UNKNOWN] and [NOT FOUND], because the strings are not an exact match (will be fixed in the next updates). 
+> <span style = 'color: orange'> NOTE: as it is for now, the parser considers any prototype that is different from the ones he's looking for, as UNKNOWN. To clarify, if you have the right prototype with 1 more space (for e.g.) he'll display two entries: [UNKNOWN] and [NOT FOUND], because the strings are not an exact match (will be fixed in the next updates). 
 In order to minimize this from happening, you should have your files passing the Norminette.</span>
 
 | Parsing '.c' files | Parsing 'libft.h' file |
