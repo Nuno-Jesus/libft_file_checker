@@ -78,7 +78,7 @@ It prints out the result of checking if every Mandatory/Bonus part file was deli
 |:--:|:--:|
 |||
 
-> <span style='color: orange'> **NOTE**: as it is for now, if you created your bonus files with the "_bonus" as a suffix, the parser will considered it wrong. Since the Moulinette didn't complain about having or not having it, you are free to take it off, at least to parse the files. 
+<span style='color: orange'> **NOTE**: as it is for now, if you created your bonus files with the "_bonus" as a suffix, the parser will considered it wrong. Since the Moulinette didn't complain about having or not having it, you are free to take it off, at least to parse the files. 
 If you don't, probably the rest of the checks will fail in cascade. I'll fix it in the next patches.</span>
 
 
@@ -91,16 +91,16 @@ You all know her. You all know how she looks like. I don't think I need an image
 Like 2 and 3, this two can be done separately, not because they are not mandatory (because both are), but mostly due to modularity. You don't need to go through all the correct parts if you want a specific one. Here are the possible results for a prototype:
 
 - In '.c' files:
-	- [**CORRECT**] - Your prototype matches the parser's
-	- [**NOT FOUND**] - The parser found the file, but not the prototype (this one is still in the works to improve)
-	- [**FILE NOT DELIVERED**] - That one is pretty straight forward
+	- [<span style='color:#00FF88'>**CORRECT**</span>] - Your prototype matches the parser's
+	- [<span style='color:#FFDD00'>**NOT FOUND**</span>] - The parser found the file, but not the prototype (this one is still in the works to improve)
+	- [<span style='color:#FF7777'>**FILE NOT DELIVERED**</span>] - That one is pretty straight forward
 - In 'libft.h':
-	- [**CORRECT**] - The same
-	- [**UNKNOWN**] - It found a strange prototype
-	- [**NOT FOUND**] - The same
-	- [**FILE NOT DELIVERED**] - The same
+	- [<span style='color:#00FF88'>**CORRECT**</span>] - The same
+	- [<span style='color:#FFDD00'>**UNKNOWN**</span>] - It found a strange prototype
+	- [<span style='color:#FF7777'>**NOT FOUND**</span>] - The same
+	- [<span style='color:#FF7777'>**FILE NOT DELIVERED**</span>] - The same
 
-> <span style = 'color: orange'> NOTE: as it is for now, the parser considers any prototype that is different from the ones he's looking for, as UNKNOWN. To clarify, if you have the right prototype with 1 more space (for e.g.) he'll display two entries: UNKNOWN and NOT FOUND, because the strings are not an exact match (will be fixed in the next updates). 
+<span style = 'color: orange'> NOTE: as it is for now, the parser considers any prototype that is different from the ones he's looking for, as UNKNOWN. To clarify, if you have the right prototype with 1 more space (for e.g.) he'll display two entries: [UNKNOWN] and [NOT FOUND], because the strings are not an exact match (will be fixed in the next updates). 
 In order to minimize this from happening, you should have your files passing the Norminette.</span>
 
 | Parsing '.c' files | Parsing 'libft.h' file |
