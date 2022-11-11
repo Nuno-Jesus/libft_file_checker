@@ -1,12 +1,12 @@
-import random
 import os
 import copy
+import random
 import subprocess
 
 from colorama import Style
 from colorama import Fore
 
-# Path to search for the files on (yes, this is where you change to the correct path)
+# INSERT YOUR PATH HERE, INSIDE QUOTES
 path = '../42-cursus/libft/'
 
 # Used colors across the files

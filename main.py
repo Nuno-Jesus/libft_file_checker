@@ -116,7 +116,9 @@ if __name__ == '__main__':
 		parser.parse_filenames(bonus_files, 'BONUS PART')
 		parser.parse_norminette_result()
 		parser.parse_function_prototypes(full_dict)
-		parser.parse_headerfile_prototypes(full_dict2)	
+		parser.parse_headerfile_prototypes(full_dict2)
+	else:
+		print('\n\t--- Option not supported. Aborting. ---\n\n')	
 
 	
 	

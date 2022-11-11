@@ -70,7 +70,7 @@ class Parser:
 					results.update({file : f'[{danger_color}FILE NOT DELIVERED{reset}]'})
 
 			num_correct = len(list(filter(lambda x : x[1].find('CORRECT') != -1, results.items())))
-			num_wrong = len(list(filter(lambda x : x[1].find('MISMATCHING') != -1, results.items())))
+			num_wrong = len(list(filter(lambda x : x[1].find('NOT FOUND') != -1, results.items())))
 			num_not_delivered = len(list(filter(lambda x : x[1].find('FILE NOT DELIVERED') != -1, results.items())))
 
 			print(f'You have {correct_color}{num_correct}{reset} files with the correct prototype, ' 
