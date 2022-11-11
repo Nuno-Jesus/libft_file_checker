@@ -10,7 +10,7 @@ part1_files = {
 	'ft_memmove.c' 	: ProjectFile('ft_memmove', 'void\t*ft_memmove(void *dest, const void *src, size_t n)', []),
 	'ft_memchr.c' 	: ProjectFile('ft_memchr', 'void\t*ft_memchr(const void *s, int c, size_t n)', []),
 	'ft_memcmp.c' 	: ProjectFile('ft_memcmp', 'int\tft_memcmp(const void *s1, const void *s2, size_t n)', []),
-	'ft_strlen.c' 	: ProjectFile('ft_strlen', 'size_t\tft_strlen(char const *s)', []),
+	'ft_strlen.c' 	: ProjectFile('ft_strlen', 'size_t\tft_strlen(const char *s)', []),
 	'ft_strlcpy.c' 	: ProjectFile('ft_strlcpy', 'size_t\tft_strlcpy(char *dst, const char *src, size_t size)', []),
 	'ft_strlcat.c' 	: ProjectFile('ft_strlcat', 'size_t\tft_strlcat(char *dst, const char *src, size_t size)', []),
 	'ft_strchr.c' 	: ProjectFile('ft_strchr', 'char\t*ft_strchr(const char *s, int c)', []),
@@ -52,10 +52,10 @@ bonus_files = {
 	'ft_lstsize.c' 		: ProjectFile('ft_lstsize', 'int\tft_lstsize(t_list *lst)', None),
 	'ft_lstlast.c' 		: ProjectFile('ft_lstlast', 't_list\t*ft_lstlast(t_list *lst)', None),
 	'ft_lstadd_back.c' 	: ProjectFile('ft_lstadd_back', 'void\tft_lstadd_back(t_list **lst, t_list *new)', None),
-	'ft_lstdelone.c' 	: ProjectFile('ft_lstdelone', 'void\tft_lstdelone(t_list *lst, void (*del)(void *))', ['free']),
-	'ft_lstclear.c' 	: ProjectFile('ft_lstclear', 'void\tft_lstclear(t_list **lst, void (*del)(void *))', ['free']),
-	'ft_lstiter.c' 		: ProjectFile('ft_lstiter', 'void\tft_lstiter(t_list *lst, void (*f)(void *))', None),
-	'ft_lstmap.c' 		: ProjectFile('ft_lstmap', 't_list\t*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))', ['malloc', 'free'])
+	'ft_lstdelone.c' 	: ProjectFile('ft_lstdelone', 'void\tft_lstdelone(t_list *lst, void (*del)(void*))', ['free']),
+	'ft_lstclear.c' 	: ProjectFile('ft_lstclear', 'void\tft_lstclear(t_list **lst, void (*del)(void*))', ['free']),
+	'ft_lstiter.c' 		: ProjectFile('ft_lstiter', 'void\tft_lstiter(t_list *lst, void (*f)(void*))', None),
+	'ft_lstmap.c' 		: ProjectFile('ft_lstmap', 't_list\t*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void*))', ['malloc', 'free'])
 }
 
 # Dictionary to be filled with extra files found when parsing
