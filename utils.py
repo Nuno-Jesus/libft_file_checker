@@ -38,11 +38,11 @@ char_map = {
 }
 
 def tokenize(str):
-	print(str)
-
 	str = str.replace("\t", " ")
 	str = str.replace(" **", "** ")
 	str = str.replace(" *", "* ")
+	str = str.replace("( ", "(")
+	str = str.replace(" )", ")")
 	str = str.replace("(", " ")
 	str = str.replace(")", " ")
 	str = str.replace(" ,", ",")

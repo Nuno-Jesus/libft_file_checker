@@ -54,7 +54,7 @@ bonus_files = {
 	'ft_lstiter.c' 		: ProjectFile('ft_lstiter', 'void\tft_lstiter(t_list *lst, void (*f)(void*))', None),
 	'ft_lstmap.c' 		: ProjectFile('ft_lstmap', 't_list\t*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void*))', ['malloc', 'free'])
 }
-
+""" 
 strs = list(map(lambda x : x[1].header, bonus_files.items()))
 
 for str in strs:
@@ -72,3 +72,27 @@ for str in strs:
 
 	if res == ['t_list*', 'ft_lstmap', 't_list*', 'lst,', 'void*', '*f', 'void*,', 'void', '*del', 'void*']:
 		print(res)
+
+ """
+str = "t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))"
+str = str.replace("\t", " ")
+print(str)
+str = str.replace(" **", "** ")
+print(str)
+str = str.replace(" *", "* ")
+print(str)
+str = str.replace("(", " ")
+print(str)
+str = str.replace("( ", "(")
+print(str)
+str = str.replace(" )", ")")
+print(str)
+str = str.replace(")", " ")
+print(str)
+str = str.replace(" ,", ",")
+print(str)
+
+res = str.split(' ')
+res = list(filter(lambda x : x != '', res))
+
+print(res)

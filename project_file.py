@@ -12,15 +12,18 @@ class ProjectFile:
 		f = open(path + self.func + '.c', 'r')
 
 		line = f.readline()
+		expected = tokenize(self.header)
 		while line != '':
 			line = line.replace('\n', '')
 
-			expected = tokenize(self.header)
 			delivered = tokenize(line)
+			""" if(self.func == 'ft_lstmap'):
+				print(delivered) """
 			if delivered == expected:
 				f.close()
 				return {self.func : f'[{correct_color}CORRECT{reset}]'}
 
 			line = f.readline()
 		f.close()
-		return {self.func : f'[{warning_color}NOT FOUND{reset}]'}
+		print(expected)
+		return {self.header : f'[{warning_color}NOT FOUND{reset}]'}
