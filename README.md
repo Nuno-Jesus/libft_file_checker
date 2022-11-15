@@ -45,10 +45,10 @@ then you can skip this step. Otherwise, you must change the "path" variable insi
 	...
 ```
 
-**3.** If you reached this step, you can finally execute it! Because the 'brain' of the tool was built on Python, there is no need for compilation and binary files generation (unlike C). Just open a terminal inside this directory's folder and run the following command:
+**3.** If you reached this step, you can finally execute it! Because the 'brain' of the tool was built on Python, there is no need for compilation and binary files generation (unlike C). Just open a terminal inside this directory's folder and run the **make** command:
 
 ```shell 
-python3 -B main.py
+make
 ```
 
 It should prompt you with something similar to this:
