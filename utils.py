@@ -37,6 +37,20 @@ char_map = {
 	'\n' : Fore.WHITE
 }
 
+def tokenize(str):
+	print(str)
+
+	str = str.replace("\t", " ")
+	str = str.replace(" **", "** ")
+	str = str.replace(" *", "* ")
+	str = str.replace("(", " ")
+	str = str.replace(")", " ")
+	str = str.replace(" ,", ",")
+	
+	res = str.split(' ')
+	res = list(filter(lambda x : x != '', res))
+	print(res)
+
 def print_menu():
 	menu_string = \
 	'\t\t        :::      ::::::::   ::::::::::: ::::::::::: ::::::::::: :::        \n' + \
