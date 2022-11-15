@@ -14,8 +14,10 @@ class ProjectFile:
 		line = f.readline()
 		while line != '':
 			line = line.replace('\n', '')
-			
-			if line == self.header:
+
+			expected = tokenize(self.header)
+			delivered = tokenize(line)
+			if delivered == expected:
 				f.close()
 				return {self.func : f'[{correct_color}CORRECT{reset}]'}
 

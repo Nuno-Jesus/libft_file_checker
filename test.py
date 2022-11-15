@@ -66,7 +66,9 @@ for str in strs:
 	str = str.replace("(", " ")
 	str = str.replace(")", " ")
 	str = str.replace(" ,", ",")
-	
+
 	res = str.split(' ')
 	res = list(filter(lambda x : x != '', res))
-	print(res)
+
+	if res == ['t_list*', 'ft_lstmap', 't_list*', 'lst,', 'void*', '*f', 'void*,', 'void', '*del', 'void*']:
+		print(res)

@@ -49,7 +49,9 @@ def tokenize(str):
 	
 	res = str.split(' ')
 	res = list(filter(lambda x : x != '', res))
-	print(res)
+	#print(res)
+
+	return res
 
 def print_menu():
 	menu_string = \
