@@ -17,12 +17,12 @@ class ProjectFile:
 			line = line.replace('\n', '')
 
 			delivered = tokenize(line)
-			""" if(self.func == 'ft_lstmap'):
-				print(delivered) """
-			if delivered == expected:
-				f.close()
-				return {self.func : f'[{CORRECT}CORRECT{RESET}]'}
-
+			if len(delivered) == len(expected):
+				if delivered[1] == expected[1]:
+					if delivered != expected:
+						return {delivered[1] : f'[{WARNING}MISMATCHING{RESET}]'}
+					else:
+						return {delivered[1] : f'[{CORRECT}CORRECT{RESET}]'}
 			line = f.readline()
 		f.close()
 		print(expected)
@@ -46,7 +46,6 @@ class ProjectFile:
 			
 			# If I found a prototype
 			if line.endswith(');\n'):
-				#print(delivered[1])
 				if delivered[1] in possible_headers.keys():
 					if possible_headers[delivered[1]] != delivered:
 						headers_result.update({delivered[1] : f'[{FATAL}MISMATCHING{RESET}]'})
