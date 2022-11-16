@@ -65,7 +65,7 @@ class Parser:
 			results = {}
 			for file in c_files:
 				if file in self.entries:
-					results.update(dict[file].check_prototype())
+					results.update(dict[file].find_prototype())
 				else:
 					results.update({file : f'[{danger_color}FILE NOT DELIVERED{reset}]'})
 
@@ -94,34 +94,7 @@ class Parser:
 				print(f'libft.h\t\t[{danger_color}FILE NOT DELIVERED{reset}]')
 				return
 
-			possible_headers = {}
-			for key, func in full_dict.items():
-				if key.startswith('ft_'):
-					possible_headers.update({''.join(filter(lambda c : c != '\t' and c != '\n', func.header)) : key})
-			
-			#print(possible_headers)
-			 
-
-			headers_result = {}
-			f = open(path + 'libft.h', 'r')
-
-			line = f.readline()
-			while line != '':
-				# Filter the current line out of tabs, spaces
-				tmp = ''.join(filter(lambda c : c != '\t' and c != '\n', line)).strip(';')
-				
-				if line.endswith(');\n') and tmp not in possible_headers.keys():
-					headers_result.update({line.strip('\n') : f'[{warning_color}UNKNOWN{reset}]'})
-				elif tmp in possible_headers.keys():
-					headers_result.update({possible_headers[tmp].strip('.c') : f'[{correct_color}CORRECT{reset}]'})
-					possible_headers.pop(tmp)
-
-				line = f.readline()
-			f.close()
-
-			# Any header that wasn't removed from the dict, wasn't found
-			for func in possible_headers.values():
-				headers_result.update({full_dict[func].header : f'[{danger_color}NOT FOUND{reset}]'})
+			headers_result = full_dict['libft.h'].find_header_prototypes(full_dict)
 			
 			# Print the overall results
 			num_unknown = len(list(filter(lambda x : x[1].find('UNKNOWN') != -1, headers_result.items())))

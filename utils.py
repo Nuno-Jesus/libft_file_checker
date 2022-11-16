@@ -7,7 +7,7 @@ from colorama import Style
 from colorama import Fore
 
 # INSERT YOUR PATH HERE, INSIDE QUOTES
-path = '../libft/'
+path = '../42-cursus/libft/'
 
 # Used colors across the files
 reset = Style.RESET_ALL
