@@ -21,41 +21,46 @@ class ProjectFile:
 				print(delivered) """
 			if delivered == expected:
 				f.close()
-				return {self.func : f'[{correct_color}CORRECT{reset}]'}
+				return {self.func : f'[{CORRECT}CORRECT{RESET}]'}
 
 			line = f.readline()
 		f.close()
 		print(expected)
-		return {self.header : f'[{warning_color}NOT FOUND{reset}]'}
+		return {self.header : f'[{WARNING}NOT FOUND{RESET}]'}
 
-	def find_header_prototypes(self, dict) -> dict:
+	def find_header_prototypes(self, full_dict) -> dict:
 		headers_result = {}
 		possible_headers = {}
 
-		for key, func in dict.items():
-			if key.startswith('ft_'):
-				normalized_header = ''.join(filter(lambda c : c != '\t' and c != '\n', func.header))
-				possible_headers.update({normalized_header : key})
-		
+		for func_name, file in full_dict.items():
+			if func_name.startswith('ft_'):
+				expected = tokenize(file.header.strip('\n'))
+				possible_headers.update({func_name.replace('.c', '') : expected})
+
+		#print(possible_headers.keys())
 		f = open(path + 'libft.h', 'r')
 		line = f.readline()
 		while line != '':
-			# Filter the current line out of tabs, spaces
-			tmp = ''.join(filter(lambda c : c != '\t' and c != '\n', line)).strip(';')
+			# Tokenization of the current line
+			delivered = tokenize(line.strip(';\n'))
 			
-			if line.endswith(');\n') and tmp not in possible_headers.keys():
-				headers_result.update({line.strip('\n') : f'[{warning_color}UNKNOWN{reset}]'})
-			elif tmp in possible_headers.keys():
-				headers_result.update({possible_headers[tmp].strip('.c') : f'[{correct_color}CORRECT{reset}]'})
-				possible_headers.pop(tmp)
-
+			# If I found a prototype
+			if line.endswith(');\n'):
+				#print(delivered[1])
+				if delivered[1] in possible_headers.keys():
+					if possible_headers[delivered[1]] != delivered:
+						headers_result.update({delivered[1] : f'[{FATAL}MISMATCHING{RESET}]'})
+					else:
+						headers_result.update({delivered[1] : f'[{CORRECT}CORRECT{RESET}]'})
+					possible_headers.pop(delivered[1])
+				else:
+					headers_result.update({line.strip(';\n') : f'[{WARNING}UNKNOWN{RESET}]'})
 			line = f.readline()
-		f.close()
 
-		# Any header that wasn't removed from the dict, wasn't found
-		for func in possible_headers.values():
-			headers_result.update({dict[func].header : f'[{danger_color}NOT FOUND{reset}]'})
-		
+		f.close()
+		 # Any header that wasn't removed from the dict, wasn't found
+		for func in possible_headers.keys():
+			headers_result.update({full_dict[func + '.c'].header : f'[{DANGER}MISSING{RESET}]'})
 		return headers_result
 
 	
