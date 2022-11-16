@@ -67,7 +67,7 @@ class Parser:
 				if file in self.entries:
 					results.update(dict[file].find_prototype())
 				else:
-					results.update({file : f'[{DANGER}FILE NOT DELIVERED{RESET}]'})
+					results.update({file : f'[{FATAL}FILE NOT DELIVERED{RESET}]'})
 
 			num_correct = len(list(filter(lambda x : x[1].find('CORRECT') != -1, results.items())))
 			num_wrong = len(list(filter(lambda x : x[1].find('NOT FOUND') != -1, results.items())))
@@ -75,7 +75,7 @@ class Parser:
 
 			print(f'You have {CORRECT}{num_correct}{RESET} files with the correct prototype, ' 
 			f'{DANGER}{num_wrong}{RESET} files with a mismatching/not found prototype and '
-			f'{WARNING}{num_not_delivered}{RESET} non-delivered files.\n')
+			f'{FATAL}{num_not_delivered}{RESET} non-delivered files.\n')
 			
 
 			for (file, result) in results.items():
