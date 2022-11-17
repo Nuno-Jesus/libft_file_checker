@@ -1,15 +1,14 @@
 import os
-from colorama import Style
 from colorama import Fore
 from utils import *
 
-class Parser:
+class FileParser:
 	def __init__(self, entries, override) -> None:
 		self.entries = entries
 		self.override = override
 		
 	def parse_unknown_files(self, dict):
-		if input('Press ENTER to continue.') == '':
+		if input(f'Press {DANGER}ENTER{RESET} to continue.') == '':
 			os.system('clear')
 			print_title('UNKNOWN FILES')
 			
@@ -22,7 +21,7 @@ class Parser:
 				print_separator('SUCCESS', '>', '<', CORRECT)
 
 	def parse_filenames(self, dict, title):
-		if input('Press ENTER to continue.') == '':
+		if input(f'Press {DANGER}ENTER{RESET} to continue.') == '':
 			os.system('clear')
 			print_title(title)
 			
@@ -43,7 +42,7 @@ class Parser:
 			print_separator('FAILURE', '>', '<', DANGER)
 
 	def parse_norminette_result(self):
-		if input('Press ENTER to continue.') == '':
+		if input(f'Press {DANGER}ENTER{RESET} to continue.') == '':
 			os.system('clear')
 			print_title('NORMINETTE')
 			
@@ -56,9 +55,9 @@ class Parser:
 			print()
 
 	def parse_function_prototypes(self, dict):
-		if input('Press ENTER to continue.') == '':
+		if input(f'Press {DANGER}ENTER{RESET} to continue.') == '':
 			os.system('clear')
-			print_title('C FILES FUNCTION PROTOTYPES')
+			print_title('CHECKING .C FILES FOR EACH PROTOTYPE')
 
 			c_files = list(filter(lambda x : x.startswith('ft_'), dict.keys()))
 	
@@ -74,23 +73,26 @@ class Parser:
 			num_wrong = len(list(filter(lambda x : x[1].find('NOT FOUND') != -1, results.items())))
 			num_not_delivered = len(list(filter(lambda x : x[1].find('FILE NOT DELIVERED') != -1, results.items())))
 
-			print(f'You have {CORRECT}{num_correct}{RESET} files with the correct prototype, ' 
-			f'{DANGER}{num_wrong}{RESET} files where the prototype wasn\'t found and '
-			f'{WARNING}{num_mismatching}{RESET} files with a mismatching prototype and '
-			f'{FATAL}{num_not_delivered}{RESET} non-delivered files.\n')
+			print(f'You have {CORRECT}{num_correct}{RESET} file(s) with the correct prototype, ' 
+			f'{DANGER}{num_wrong}{RESET} file(s) where the prototype wasn\'t found, '
+			f'{WARNING}{num_mismatching}{RESET} file(s) with a mismatching prototype and '
+			f'{FATAL}{num_not_delivered}{RESET} non-delivered file(s).\n')
 			
-
 			for (file, result) in results.items():
 				print(f'{result.ljust(30)}{file}')
-			if num_wrong != 0:
+
+			if num_mismatching != 0:
+				print(f'\nDetailed information can be found in the {DANGER}results.log{RESET} file.')
+			
+			if num_wrong != 0 and num_mismatching != 0:
 				print_separator('FAILURE', '>', '<', DANGER)
 			else:
 				print_separator('SUCCESS', '>', '<', CORRECT)
 
 	def parse_headerfile_prototypes(self, full_dict):
-		if input('Press ENTER to continue.') == '':
+		if input(f'Press {DANGER}ENTER{RESET} to continue.') == '':
 			os.system('clear')
-			print_title('LIBFT.H FUNCTION PROTOTYPES')
+			print_title('CHECKING LIBFT.H FOR EACH PROTOTYPE')
 			
 			if 'libft.h' not in self.entries:
 				print(f'libft.h\t\t[{DANGER}FILE NOT DELIVERED{RESET}]')
@@ -111,6 +113,9 @@ class Parser:
 
 			for (header, res) in headers_result.items():
 				print(res.ljust(25) + ' ' + header)
+
+			if num_mismatching != 0:
+				print(f'\nDetailed information can be found in the {DANGER}results.log{RESET} file.')
 
 			if num_not_found != 0:
 				print_separator('FAILURE', '>', '<', DANGER)
