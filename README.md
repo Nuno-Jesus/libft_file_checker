@@ -98,8 +98,7 @@ Like 2 and 3, this two can be done separately, not because they are not mandator
 	- [<span style='color:#00AAFF'>**MISMATCHING**</span>] - The same
 	- [<span style='color:#FF7777'>**MISSING**</span>] - The same
 	- [<span style='color:#FF7777'>**FILE NOT DELIVERED**</span>] - The same
-> <span style = 'color: orange'> NOTE: the variables in your prototypes should be named after the ones in the manual. Even a single different letter will trigger the MISMATCHING flag in the parsing of a prototype. 
-In order to minimize this from happening, you should have your files passing the Norminette.</span>
+> <span style = 'color: orange'> NOTE: the variables in your prototypes should be named after the ones in the manual. Even a single different letter will trigger the MISMATCHING flag in the parsing of a prototype. </span>
 
 | Parsing '.c' files | Parsing 'libft.h' file |
 |:--:|:--:|
