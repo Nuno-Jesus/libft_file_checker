@@ -39,7 +39,7 @@ part2_files = {
 	'ft_split.c'		: ProjectFile('ft_split', 'char\t**ft_split(char const *s, char c)', ['malloc', 'free']),
 	'ft_itoa.c'			: ProjectFile('ft_itoa', 'char\t*ft_itoa(int n)', ['malloc']),
 	'ft_strmapi.c'		: ProjectFile('ft_strmapi', 'char\t*ft_strmapi(char const *s, char (*f)(unsigned int, char))', ['malloc']),
-	'ft_striteri.c'		: ProjectFile('ft_striteri', 'void\tft_striteri(char *s, void (*f)(unsigned int, char *))', None),
+	'ft_striteri.c'		: ProjectFile('ft_striteri', 'void\tft_striteri(char *s, void (*f)(unsigned int, char*))', None),
 	'ft_putchar_fd.c'	: ProjectFile('ft_putchar_fd', 'void\tft_putchar_fd(char c, int fd)', ['write']),
 	'ft_putstr_fd.c'	: ProjectFile('ft_putstr_fd', 'void\tft_putstr_fd(char *s, int fd)', ['write']),
 	'ft_putendl_fd.c'	: ProjectFile('ft_putendl_fd', 'void\tft_putendl_fd(char *s, int fd)', ['write']),
