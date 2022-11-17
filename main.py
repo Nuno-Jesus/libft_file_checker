@@ -69,6 +69,8 @@ def read_delivered_files() -> list:
 	entries.sort()
 
 	for entry in entries:
+		entry = entry.replace('_bonus', '')
+		
 		if part1_files.get(entry) is not None:
 			part1_files[entry].wasDelivered = True
 		elif part2_files.get(entry) is not None:
@@ -96,7 +98,7 @@ if __name__ == '__main__':
 
 	f = open('results.log', 'w')
 	f.truncate(0)
-	
+
 	option = input('Choose your option: ')
 	if option == '1':
 		parser.parse_unknown_files(unknown_files)

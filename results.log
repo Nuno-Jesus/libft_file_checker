@@ -1,6 +1,0 @@
-In ft_isalnum.c:
-	Expected: ['int', 'ft_isalnum', 'int', 'c']
-	Delivered: ['int', 'ft_isalnum', 'int', 'c1']
-In libft.h:
-	Expected: ['void*', 'ft_memmove', 'void*', 'dest,', 'const', 'void*', 'src,', 'size_t', 'n']
-	Delivered: ['void*', 'ft_memmove', 'void*', 'dest2,', 'const', 'void*', 'src,', 'size_t', 'n']
