@@ -30,7 +30,7 @@ class ProjectFile:
 			line = f.readline()
 
 		f.close()
-		return {f'{self.func}.c : {self.header}' : f'[{DANGER}NOT FOUND{RESET}]'}
+		return {f'{self.func}.c : {self.header}' : f'[{DANGER}MISSING{RESET}]'}
 
 	def find_header_prototypes(self, full_dict) -> dict:
 		headers_result = {}

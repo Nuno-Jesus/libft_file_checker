@@ -51,7 +51,7 @@ then you can skip this step. Otherwise, you must change the "path" variable insi
 make
 ```
 
-It should prompt you with something similar to this:
+The Makefile was configured to pull updates from the repository, so its ok to take a while to display the menu. It should prompt you with something similar to this:
 
 | Main Menu |
 |:--:|
@@ -79,29 +79,26 @@ It prints out the result of checking if every Mandatory/Bonus part file was deli
 |![image](https://user-images.githubusercontent.com/93390807/201247602-7e256eee-4b4c-4ab6-a0ad-64861ca0818e.png)|![image](https://user-images.githubusercontent.com/93390807/201247674-3de5f2b1-2923-45e2-9f1a-1de58d7b56a1.png)
 |
 
-> <span style='color: orange'> **NOTE**: as it is for now, if you created your bonus files with the "_bonus" as a suffix, the parser will consider it wrong. Since the Moulinette didn't complain about having or not having it, you are free to take it off, at least to parse the files. 
-If you don't, probably the rest of the checks will fail in cascade. I'll fix it in the next patches.</span>
-
-
 **4. Run the Norminette**
 
 You all know her. You all know how she looks like. I don't think I need an image for this one (for now...).
 
 **5./6. Look for incorrect function prototypes in '.c'/'libft.h' files**
 
-Like 2 and 3, this two can be done separately, not because they are not mandatory (because both are), but mostly due to modularity. You don't need to go through all the correct parts if you want a specific one. Here are the possible results for a prototype:
+Like 2 and 3, this two can be done separately, not because they are not mandatory (because both are), but mostly due to modularity. You don't need to go through all the correct parts if you want a specific one. Both files might generate a **results.log** file if there are mismatching prototypes. Here are the possible results for a prototype:
 
 - In '.c' files:
 	- [<span style='color:#00FF88'>**CORRECT**</span>] - Your prototype matches the parser's
-	- [<span style='color:#FFDD00'>**NOT FOUND**</span>] - The parser found the file, but not the prototype (this one is still in the works to improve)
+	- [<span style='color:#FF7777'>**MISSING**</span>] - The parser found the file, but not the prototype (this one is still in the works to improve)
+	- [<span style='color:#00AAFF'>**MISMATCHING**</span>] - The function name was found but the whole prototype doesn't match the expected one
 	- [<span style='color:#FF7777'>**FILE NOT DELIVERED**</span>] - That one is pretty straight forward
 - In 'libft.h':
 	- [<span style='color:#00FF88'>**CORRECT**</span>] - The same
 	- [<span style='color:#FFDD00'>**UNKNOWN**</span>] - It found a strange prototype
-	- [<span style='color:#FF7777'>**NOT FOUND**</span>] - The same
+	- [<span style='color:#00AAFF'>**MISMATCHING**</span>] - The same
+	- [<span style='color:#FF7777'>**MISSING**</span>] - The same
 	- [<span style='color:#FF7777'>**FILE NOT DELIVERED**</span>] - The same
-
-> <span style = 'color: orange'> NOTE: as it is for now, the parser considers any prototype that is different from the ones he's looking for, as UNKNOWN. To clarify, if you have the right prototype with 1 more space (for e.g.) he'll display two entries: [UNKNOWN] and [NOT FOUND], because the strings are not an exact match (will be fixed in the next updates). 
+> <span style = 'color: orange'> NOTE: the variables in your prototypes should be named after the ones in the manual. Even a single different letter will trigger the MISMATCHING flag in the parsing of a prototype. 
 In order to minimize this from happening, you should have your files passing the Norminette.</span>
 
 | Parsing '.c' files | Parsing 'libft.h' file |
