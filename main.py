@@ -1,5 +1,5 @@
 from project_file import ProjectFile
-from parser import Parser
+from file_parser import FileParser
 from utils import *
 
 # The following dictionaries map filenames to an object containing the necessary information about it
@@ -69,6 +69,8 @@ def read_delivered_files() -> list:
 	entries.sort()
 
 	for entry in entries:
+		entry = entry.replace('_bonus', '')
+		
 		if part1_files.get(entry) is not None:
 			part1_files[entry].wasDelivered = True
 		elif part2_files.get(entry) is not None:
@@ -92,7 +94,10 @@ if __name__ == '__main__':
 	full_dict2 = copy.deepcopy(full_dict)
 
 	entries = read_delivered_files()
-	parser = Parser(entries, True)
+	parser = FileParser(entries, True)
+
+	f = open('results.log', 'w')
+	f.truncate(0)
 
 	option = input('Choose your option: ')
 	if option == '1':
@@ -118,7 +123,7 @@ if __name__ == '__main__':
 		parser.parse_function_prototypes(full_dict)
 		parser.parse_headerfile_prototypes(full_dict2)
 	else:
-		print('\n\t--- Option not supported. Aborting. ---\n\n')	
+		print(f'\n\t--- Option \'{option}\' not supported. Aborting. ---\n\n')	
 
 	
 	

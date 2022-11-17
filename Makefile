@@ -3,6 +3,7 @@ FLAGS = -B
 PY = python3
 
 all:
+  echo "Searching for updates..."
 	git pull
-	echo "Searching for updates..."
-	$(PY) $(FLAGS) $(TARGET)
+	sleep 1
+  $(PY) $(FLAGS) $(TARGET)
