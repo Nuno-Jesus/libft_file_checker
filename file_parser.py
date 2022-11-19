@@ -64,7 +64,7 @@ class FileParser:
 			results = {}
 			for file in c_files:
 				if file in self.entries:
-					results.update(dict[file].find_prototype())
+					results.update(dict[file].find_c_file_prototype())
 				else:
 					results.update({file : f'[{FATAL}FILE NOT DELIVERED{RESET}]'})
 
@@ -82,7 +82,7 @@ class FileParser:
 				print(f'{result.ljust(30)}{file}')
 
 			if num_mismatching != 0:
-				print(f'\nDetailed information can be found in the {DANGER}results.log{RESET} file.')
+				print(f'\nDetailed information can be found using the {DANGER}cat results.log{RESET} command.')
 			
 			if num_wrong != 0 and num_mismatching != 0:
 				print_separator('FAILURE', '>', '<', DANGER)
@@ -115,7 +115,7 @@ class FileParser:
 				print(res.ljust(25) + ' ' + header)
 
 			if num_mismatching != 0:
-				print(f'\nDetailed information can be found in the {DANGER}results.log{RESET} file.')
+				print(f'\nDetailed information can be found using the {DANGER}cat results.log{RESET} command.')
 
 			if num_not_found != 0:
 				print_separator('FAILURE', '>', '<', DANGER)

@@ -8,7 +8,7 @@ class ProjectFile:
 		self.allowed_funcs = allowed_funcs
 		self.wasDelivered = False
 
-	def find_prototype(self):
+	def find_c_file_prototype(self):
 		f = open(path + self.func + '.c', 'r')
 
 		line = f.readline()
@@ -19,14 +19,13 @@ class ProjectFile:
 			delivered = tokenize(line)
 			if len(delivered) == len(expected):
 				if delivered[1] == expected[1]:
+					f.close()
 					if delivered != expected:
-						r = open('results.log', 'a')
-						r.write(f'In {self.func}.c:\n')
-						r.write(f'\tExpected: {str(expected)}\n')
-						r.write(f'\tDelivered: {str(delivered)}\n')
+						self.log('results.log', self.func + '.c',expected, delivered)
 						return {delivered[1] : f'[{WARNING}MISMATCHING{RESET}]'}
 					else:
 						return {delivered[1] : f'[{CORRECT}CORRECT{RESET}]'}
+
 			line = f.readline()
 
 		f.close()
@@ -51,10 +50,7 @@ class ProjectFile:
 			if line.endswith(');\n'):
 				if delivered[1] in possible_headers.keys():
 					if possible_headers[delivered[1]] != delivered:
-						r = open('results.log', 'a')
-						r.write(f'In libft.h:\n')
-						r.write(f'\tExpected: {str(possible_headers[delivered[1]])}\n')
-						r.write(f'\tDelivered: {str(delivered)}\n')
+						self.log('results.log', 'libft.h', possible_headers[delivered[1]], delivered)
 						headers_result.update({delivered[1] : f'[{FATAL}MISMATCHING{RESET}]'})
 					else:
 						headers_result.update({delivered[1] : f'[{CORRECT}CORRECT{RESET}]'})
@@ -70,5 +66,37 @@ class ProjectFile:
 			headers_result.update({full_dict[func + '.c'].header : f'[{DANGER}MISSING{RESET}]'})
 		
 		return headers_result
+
+	def log(self, logfile, filename, expected, delivered):
+		f = open(logfile, 'a')
+		f.write(f'In {FATAL}{filename}{RESET}:\n')
+
+		str = '\tExpected: ['
+		for i in range(len(expected)):
+			if i >= len(delivered):
+				str += f'\'{CORRECT}{expected[i]}{RESET}\', '
+			elif delivered[i] != expected[i]:
+				str += f'\'{CORRECT}{expected[i]}{RESET}\', '
+			else:
+				str += f'\'{expected[i]}\', '
+		str += ']\n'
+		str = str.replace(', ]', ']')
+		f.write(str)
+
+		str = '\tDelivered: ['
+		for i in range(len(delivered)):
+			if i >= len(expected):
+				str += f'\'{DANGER}{delivered[i]}{RESET}\', '
+			elif delivered[i] != expected[i]:
+				str += f'\'{DANGER}{delivered[i]}{RESET}\', '
+			else:
+				str += f'\'{delivered[i]}\', '
+		str += ']\n'
+		str = str.replace(', ]', ']')
+		f.write(str)
+
+		f.close()
+
+
 
 	

@@ -1,0 +1,39 @@
+In [94mlibft.h[0m:
+	Expected: ['int', 'ft_atoi', 'const', 'char*', '[92mnptr[0m']
+	Delivered: ['int', 'ft_atoi', 'const', 'char*', '[91mstr[0m']
+In [94mlibft.h[0m:
+	Expected: ['[92mvoid[0m', 'ft_bzero', 'void*', 's,', 'size_t', '[92mn[0m']
+	Delivered: ['[91mvoid*[0m', 'ft_bzero', 'void*', 's,', 'size_t', '[91mlen[0m']
+In [94mlibft.h[0m:
+	Expected: ['void*', 'ft_calloc', 'size_t', '[92mnmemb,[0m', 'size_t', '[92msize[0m']
+	Delivered: ['void*', 'ft_calloc', 'size_t', '[91mbuff_len,[0m', 'size_t', '[91mitem_size[0m']
+In [94mlibft.h[0m:
+	Expected: ['void*', 'ft_memchr', 'const', 'void*', '[92ms,[0m', 'int', 'c,', 'size_t', '[92mn[0m']
+	Delivered: ['void*', 'ft_memchr', 'const', 'void*', '[91mp_mem,[0m', 'int', 'c,', 'size_t', '[91mlength[0m']
+In [94mlibft.h[0m:
+	Expected: ['int', 'ft_memcmp', 'const', 'void*', '[92ms1,[0m', 'const', 'void*', '[92ms2,[0m', 'size_t', '[92mn[0m']
+	Delivered: ['int', 'ft_memcmp', 'const', 'void*', '[91mstr1,[0m', 'const', 'void*', '[91mstr2,[0m', 'size_t', '[91mcount[0m']
+In [94mlibft.h[0m:
+	Expected: ['void*', 'ft_memcpy', 'void*', 'dest,', 'const', 'void*', 'src,', 'size_t', '[92mn[0m']
+	Delivered: ['void*', 'ft_memcpy', 'void*', 'dest,', 'const', 'void*', 'src,', 'size_t', '[91mlen[0m']
+In [94mlibft.h[0m:
+	Expected: ['void*', 'ft_memmove', 'void*', 'dest,', 'const', 'void*', 'src,', 'size_t', '[92mn[0m']
+	Delivered: ['void*', 'ft_memmove', 'void*', 'dest,', 'const', 'void*', 'src,', 'size_t', '[91mlen[0m']
+In [94mlibft.h[0m:
+	Expected: ['char*', 'ft_strdup', 'const', 'char*', '[92ms[0m']
+	Delivered: ['char*', 'ft_strdup', 'const', 'char*', '[91mstr[0m']
+In [94mlibft.h[0m:
+	Expected: ['size_t', 'ft_strlcat', 'char*', '[92mdst,[0m', 'const', 'char*', 'src,', 'size_t', 'size']
+	Delivered: ['size_t', 'ft_strlcat', 'char*', '[91mdest,[0m', 'const', 'char*', 'src,', 'size_t', 'size']
+In [94mlibft.h[0m:
+	Expected: ['size_t', 'ft_strlcpy', 'char*', '[92mdst,[0m', 'const', 'char*', 'src,', 'size_t', 'size']
+	Delivered: ['size_t', 'ft_strlcpy', 'char*', '[91mdest,[0m', 'const', 'char*', 'src,', 'size_t', 'size']
+In [94mlibft.h[0m:
+	Expected: ['size_t', 'ft_strlen', 'const', 'char*', '[92ms[0m']
+	Delivered: ['size_t', 'ft_strlen', 'const', 'char*', '[91mstr[0m']
+In [94mlibft.h[0m:
+	Expected: ['char*', 'ft_strrchr', 'const', 'char*', 's,', 'int', '[92mc[0m']
+	Delivered: ['char*', 'ft_strrchr', 'const', 'char*', 's,', 'int', '[91mch[0m']
+In [94mlibft.h[0m:
+	Expected: ['int', 'ft_tolower', '[92mint[0m', '[92mc[0m']
+	Delivered: ['int', 'ft_tolower']
