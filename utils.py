@@ -1,4 +1,5 @@
 import os
+import re
 import copy
 import random
 import subprocess
@@ -7,7 +8,7 @@ from colorama import Style
 from colorama import Fore
 
 # INSERT YOUR PATH HERE, INSIDE QUOTES
-path = '../42-cursus/libft/'
+path = '../libft/'
 
 # Used colors across the files
 RESET = Style.RESET_ALL
@@ -39,18 +40,17 @@ char_map = {
 }
 
 def tokenize(str):
-	str = str.replace("\t", " ")
-	str = str.replace(" **", "** ")
-	str = str.replace(" *", "* ")
-	str = str.replace("( ", "(")
-	str = str.replace(" )", ")")
-	str = str.replace("(", " ")
-	str = str.replace(")", " ")
-	str = str.replace(" ,", ",")
+	str = re.sub('\t+', ' ', str)
+	str = str.replace(' **', '** ')
+	str = str.replace(' *', '* ')
+	str = str.replace('( ', '(')
+	str = str.replace(' )', ')')
+	str = str.replace('(', ' ')
+	str = str.replace(')', ' ')
+	str = str.replace(' ,', ',')
 	
 	res = str.split(' ')
 	res = list(filter(lambda x : x != '', res))
-	#print(res)
 
 	return res
 
