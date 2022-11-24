@@ -19,6 +19,9 @@ CORRECT = Fore.LIGHTGREEN_EX
 MAIN_MENU_COLOR = WARNING
 COLORS = [MAIN_MENU_COLOR, Fore.LIGHTGREEN_EX]
 
+# Log file
+logfile = 'result.log'
+
 # This is used to easily print the right string on the given option
 menu_options = {
 	'1' : 'Check for forbidden files',

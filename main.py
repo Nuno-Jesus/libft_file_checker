@@ -96,7 +96,7 @@ if __name__ == '__main__':
 	entries = read_delivered_files()
 	parser = FileParser(entries, True)
 
-	f = open('results.log', 'w')
+	f = open(logfile, 'w')
 	f.truncate(0)
 
 	option = input('Choose your option: ')
